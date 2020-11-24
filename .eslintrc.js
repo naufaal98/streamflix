@@ -33,7 +33,10 @@ module.exports = {
     'no-use-before-define': 'off',
     camelcase: 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      'error',
+      { extensions: ['.js', '.jsx', '.tsx'] },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
