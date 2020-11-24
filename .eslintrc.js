@@ -31,6 +31,7 @@ module.exports = {
   rules: {
     'react/jsx-one-expression-per-line': 'off',
     'no-use-before-define': 'off',
+    camelcase: 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
     'import/extensions': [
