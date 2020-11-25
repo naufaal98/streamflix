@@ -4,6 +4,7 @@ export interface Movie {
   rating: number;
   overview: string;
   release_date: string;
+  price: number;
 }
 
 export interface MovieList {

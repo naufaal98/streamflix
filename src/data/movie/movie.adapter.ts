@@ -1,4 +1,5 @@
 import { Movie, MovieList, Cast, MovieDetail } from 'types/Movie';
+import calculatePriceByRating from 'utils/calculatePriceByRating';
 
 export function movieAdapter(movie: any): Movie {
   return {
@@ -7,6 +8,7 @@ export function movieAdapter(movie: any): Movie {
     rating: movie.vote_average,
     overview: movie.overview,
     release_date: movie.release_date,
+    price: calculatePriceByRating(movie.vote_average),
   };
 }
 

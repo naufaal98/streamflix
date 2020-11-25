@@ -34,17 +34,17 @@ export async function getNowPlayingMovies({
 
 export async function getMovieDetail(id: number): Promise<MovieDetail> {
   const URL_DETAIL = `${BASE_URL}/${id}`;
-  const URL_CASTS = `${BASE_URL}/${id}/credits`;
+  const URL_CREDIT = `${BASE_URL}/${id}/credits`;
 
   const { data: movie } = await axios.get<any>(URL_DETAIL, { params: { api_key: API_KEY } });
-  const { data: casts } = await axios.get<any>(URL_CASTS, { params: { api_key: API_KEY } });
+  const { data: credit } = await axios.get<any>(URL_CREDIT, { params: { api_key: API_KEY } });
 
-  return movieDetailAdapter(movie, casts);
+  return movieDetailAdapter(movie, credit.cast);
 }
 
-export async function getRecommendationMovies(
+export async function getRecommendedMovies(
   id: number,
-  { page, language }: MovieListParams,
+  { page = 1, language }: MovieListParams,
 ): Promise<MovieList> {
   const params: MovieListParams = { page };
   if (language) params.language = language;
@@ -63,7 +63,7 @@ export async function getRecommendationMovies(
 
 export async function getSimilarMovies(
   id: number,
-  { page, language }: MovieListParams,
+  { page = 1, language }: MovieListParams,
 ): Promise<MovieList> {
   const params: MovieListParams = { page };
   if (language) params.language = language;
