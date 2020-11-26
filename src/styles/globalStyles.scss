@@ -1,6 +1,4 @@
 /* CSS Custom Properties Definitions */
-@import 'mixins';
-
 :root {
   --maxWidth-none: 'none';
   --maxWidth-xs: 20rem;
@@ -13,6 +11,11 @@
   --maxWidth-4xl: 56rem;
   --maxWidth-full: '100%';
   --maxWidth-wrapper: var(--maxWidth-2xl);
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
   --spacing-px: '1px';
   --spacing-0: 0;
   --spacing-1: 0.25rem;
@@ -53,7 +56,7 @@
   --fontSize-5: 2.074rem;
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
-  --color-primary: #333;
+  --color-primary: #c23616;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
