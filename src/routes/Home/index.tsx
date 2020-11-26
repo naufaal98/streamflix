@@ -3,20 +3,16 @@ import { Link } from 'react-router-dom';
 import { useMachine } from '@xstate/react';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
 import convertToSlug from 'utils/convertToSlug';
-import { purchaseMovie, getCurrentBalance } from 'data/user/localData';
+import { getLocalUserData } from 'data/user/localData';
 import { Movie } from 'types/Movie';
 import homeMachine from './moviesMachine';
 
 export default function Home() {
   const [state, send] = useMachine(homeMachine);
-  const [currentBalance, setCurrentBalance] = React.useState(getCurrentBalance());
+  const [currentBalance, setCurrentBalance] = React.useState(getLocalUserData().balance);
 
   function onPurchase(movie: Movie) {
-    purchaseMovie({
-      id: movie.id,
-      price: calculatePriceByRating(movie.rating),
-    });
-    setCurrentBalance(getCurrentBalance());
+    setCurrentBalance(getLocalUserData().balance);
   }
 
   return (

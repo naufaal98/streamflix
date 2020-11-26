@@ -29,15 +29,15 @@ module.exports = {
     'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
   },
   rules: {
+    'no-unused-vars': 'off',
     'react/jsx-one-expression-per-line': 'off',
     'no-use-before-define': 'off',
     'react/jsx-curly-newline': 'off',
     camelcase: 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
-    'react/jsx-filename-extension': [
-      'error',
-      { extensions: ['.js', '.jsx', '.tsx'] },
-    ],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
     'import/extensions': [
       'error',
       'ignorePackages',

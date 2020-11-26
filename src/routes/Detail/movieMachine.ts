@@ -7,18 +7,24 @@ interface MovieStateSchema {
   states: {
     loading: {};
     failure: {};
-    loaded: {};
-    buyingMovie: {};
+    loaded: {
+      states: {
+        idle: {};
+        insufficientBalance: {};
+        movieAlreadyPurchased: {};
+        purchaseSuccess: {};
+      };
+    };
   };
 }
 
-interface MovieContext {
+export interface MovieContext {
   id: number;
-  user: User | null;
+  user: User;
   movie: MovieDetail | null;
 }
 
-type MovieEvent = { type: 'BUY' } | { type: 'RETRY' };
+type MovieEvent = { type: 'PURCHASE' } | { type: 'RETRY' };
 
 const createMovieMachine = (id: number) =>
   Machine<MovieContext, MovieStateSchema, MovieEvent>(
@@ -27,7 +33,10 @@ const createMovieMachine = (id: number) =>
       initial: 'loading',
       context: {
         id,
-        user: null,
+        user: {
+          balance: 0,
+          purchased_movies: [],
+        },
         movie: null,
       },
       states: {
@@ -37,23 +46,61 @@ const createMovieMachine = (id: number) =>
             src: 'getMovieDetail',
             onDone: {
               target: 'loaded',
-              actions: assign({
-                movie: (_ctx, event: any) => event.data,
-              }),
+              actions: 'addMovieData',
             },
             onError: 'failure',
           },
         },
-        loaded: {},
+        loaded: {
+          initial: 'idle',
+          states: {
+            idle: {
+              always: [{ target: 'movieAlreadyPurchased', cond: 'isMovieAlreadyPurchased' }],
+            },
+            movieAlreadyPurchased: {},
+            insufficientBalance: {},
+            purchaseSuccess: {},
+          },
+          on: {
+            PURCHASE: [
+              {
+                cond: 'isMovieAlreadyPurchased',
+                target: 'loaded.movieAlreadyPurchased',
+              },
+              {
+                cond: 'isBalanceInsufficient',
+                target: 'loaded.insufficientBalance',
+              },
+              {
+                actions: ['purchaseMovie', 'persist'],
+                target: 'loaded.purchaseSuccess',
+              },
+            ],
+          },
+        },
         failure: {
           on: {
             RETRY: 'loading',
           },
         },
-        buyingMovie: {},
       },
     },
     {
+      guards: {
+        isMovieAlreadyPurchased: (ctx): boolean => ctx.user.purchased_movies.includes(id),
+        isBalanceInsufficient: (ctx): boolean => ctx.user.balance < ctx.movie!.price,
+      },
+      actions: {
+        purchaseMovie: assign({
+          user: (context, _event) => ({
+            balance: context.user.balance - context.movie!.price,
+            purchased_movies: [...context.user.purchased_movies, context.id],
+          }),
+        }),
+        addMovieData: assign({
+          movie: (_ctx, event: any) => event.data,
+        }),
+      },
       services: {
         getMovieDetail: (ctx) => getMovieDetail(ctx.id),
       },
