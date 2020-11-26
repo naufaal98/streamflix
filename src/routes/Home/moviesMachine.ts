@@ -15,7 +15,7 @@ interface MoviesContext {
   movieList: Movie[];
 }
 
-type MoviesEvent = { type: 'RETRY' } | { type: 'FETCH_MORE' };
+type MoviesEvent = { type: 'RETRY' };
 
 const moviesMachine = Machine<MoviesContext, MoviesStateSchema, MoviesEvent>(
   {
@@ -39,16 +39,7 @@ const moviesMachine = Machine<MoviesContext, MoviesStateSchema, MoviesEvent>(
           onError: 'failure',
         },
       },
-      loaded: {
-        on: {
-          FETCH_MORE: {
-            target: 'loading',
-            actions: assign({
-              page: (ctx: MoviesContext, _event) => ctx.page + 1,
-            }),
-          },
-        },
-      },
+      loaded: {},
       failure: {
         on: {
           RETRY: 'loading',
@@ -57,6 +48,11 @@ const moviesMachine = Machine<MoviesContext, MoviesStateSchema, MoviesEvent>(
     },
   },
   {
+    actions: {
+      increasePage: assign({
+        page: (ctx: MoviesContext, _event) => ctx.page + 1,
+      }),
+    },
     services: {
       invokeGetMovieList: (ctx) => getNowPlayingMovies({ page: ctx.page }),
     },

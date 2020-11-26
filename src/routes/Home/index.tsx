@@ -3,44 +3,28 @@ import { Link } from 'react-router-dom';
 import { useMachine } from '@xstate/react';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
 import convertToSlug from 'utils/convertToSlug';
-import { getLocalUserData } from 'data/user/user.service';
-import { Movie } from 'data/movie/movie.type';
-import homeMachine from './moviesMachine';
+import Header from 'components/Header/Header';
+import homeMachine from './homeMachine';
+import styles from './index.module.scss';
 
 export default function Home() {
   const [state, send] = useMachine(homeMachine);
-  const [currentBalance, setCurrentBalance] = React.useState(getLocalUserData().balance);
-
-  function onPurchase(movie: Movie) {
-    setCurrentBalance(getLocalUserData().balance);
-  }
-
   return (
-    <div>
-      <h2>Current Balance: {currentBalance}</h2>
-      {state.value === 'loading' && <div>Loading...</div>}
+    <div className={styles.Home}>
+      <Header />
+      <h2>Currently Playing in Indoesia </h2>
+      {/* {state.value === 'loading' && <div>Loading...</div>}
       {state.value === 'failure' && (
-        <button type="button" onClick={() => send('RETRY')}>
+        <button type="button" onClick={() => send('FETCH')}>
           Retry
         </button>
+      )} */}
+      {/* {state.value === 'fetched' && (
+        <ul>{state.context.movies?.map((movie) => console.log(movie))}</ul>
       )}
-      {state.value === 'loaded' && (
-        <ul>
-          {state.context.movieList?.map((movie) => (
-            <li>
-              <Link to={`${movie.id}-${convertToSlug(movie.title)}`}>
-                {movie.title} | {calculatePriceByRating(movie.rating)} |{' '}
-                <button type="button" onClick={() => onPurchase(movie)}>
-                  Beli
-                </button>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      <button type="button" onClick={() => send('FETCH_MORE')}>
+      <button type="button" onClick={() => send('FETCH')}>
         Fetch More
-      </button>
+      </button> */}
     </div>
   );
 }
