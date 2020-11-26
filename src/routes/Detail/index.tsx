@@ -2,7 +2,7 @@ import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams } from 'react-router-dom';
 import { getLocalUserData, setLocalUserData } from 'data/user/user.service';
-import createMovieMachine, { MovieContext } from './movieMachine';
+import movieMachine, { MovieContext } from './movieMachine';
 
 interface ParamsType {
   id: string;
@@ -10,13 +10,10 @@ interface ParamsType {
 
 export default function Detail() {
   const { id } = useParams<ParamsType>();
-  const movieMachine = React.useMemo(() => createMovieMachine((id as unknown) as number), [id]);
 
   const persistedMachine = movieMachine.withConfig(
     {
-      actions: {
-        persist: (ctx: MovieContext) => setLocalUserData(ctx.user),
-      },
+      actions: { persist: (ctx: MovieContext) => setLocalUserData(ctx.user) },
     },
     // initial state from localStorage
     {
