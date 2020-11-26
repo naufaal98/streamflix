@@ -1,5 +1,6 @@
 import { Movie, MovieList, Cast, MovieDetail } from 'data/movie/movie.type';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
+import convertToSlug from 'utils/convertToSlug';
 
 export function movieAdapter(movie: any): Movie {
   return {
@@ -10,6 +11,7 @@ export function movieAdapter(movie: any): Movie {
     release_date: movie.release_date,
     poster_path: movie.poster_path,
     backdrop_path: movie.backdrop_path,
+    slug: convertToSlug(movie.title),
     price: calculatePriceByRating(movie.vote_average),
   };
 }
