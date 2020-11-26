@@ -1,5 +1,5 @@
 import { Machine, assign, DoneInvokeEvent } from 'xstate';
-import { Movie, MovieList } from 'types/Movie';
+import { Movie, MovieList } from 'data/movie/movie.type';
 import { getNowPlayingMovies } from 'data/movie/movie.service';
 
 interface MoviesStateSchema {

@@ -1,4 +1,4 @@
-import { Movie, MovieList, Cast, MovieDetail } from 'types/Movie';
+import { Movie, MovieList, Cast, MovieDetail } from 'data/movie/movie.type';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
 
 export function movieAdapter(movie: any): Movie {

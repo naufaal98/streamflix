@@ -4,7 +4,7 @@ import { useMachine } from '@xstate/react';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
 import convertToSlug from 'utils/convertToSlug';
 import { getLocalUserData } from 'data/user/localData';
-import { Movie } from 'types/Movie';
+import { Movie } from 'data/movie/movie.type';
 import homeMachine from './moviesMachine';
 
 export default function Home() {

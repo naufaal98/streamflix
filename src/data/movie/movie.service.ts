@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from 'constant';
-import { MovieDetail, MovieList } from 'types/Movie';
+import { MovieDetail, MovieList } from 'data/movie/movie.type';
 import { movieListAdapter, movieDetailAdapter } from './movie.adapter';
 
 const API_KEY = process.env.REACT_APP_API_KEY;

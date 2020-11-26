@@ -1,6 +1,6 @@
 import { Machine, assign } from 'xstate';
 import { getMovieDetail } from 'data/movie/movie.service';
-import { MovieDetail } from 'types/Movie';
+import { MovieDetail } from 'data/movie/movie.type';
 import { User } from 'types/User';
 
 interface MovieStateSchema {
