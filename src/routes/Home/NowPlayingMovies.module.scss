@@ -1,0 +1,70 @@
+.Movie {
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.3s ease-out;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.Poster {
+  max-width: 100%;
+}
+
+.Description {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.Title {
+  font-size: var(--fontSize-1);
+  font-weight: var(--fontWeight-normal);
+  line-height: 1.5;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.Price {
+  font-weight: var(--fontWeight-bold);
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.BottomInfo {
+  display: flex;
+  align-items: center;
+
+  * {
+    margin: 0;
+  }
+}
+
+.Rating {
+  display: flex;
+  align-items: center;
+
+  .StarRating {
+    width: 18px;
+    height: 18px;
+  }
+
+  .RatingScore {
+    margin-left: 10px;
+  }
+}
+
+.PurchaseStatus {
+  font-size: 11px;
+  color: #fff;
+  background-color: #009432;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}

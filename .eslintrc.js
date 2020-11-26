@@ -36,6 +36,7 @@ module.exports = {
     camelcase: 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-shadow': 'off',
+    'react/prop-types': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.tsx'] }],
     'import/extensions': [

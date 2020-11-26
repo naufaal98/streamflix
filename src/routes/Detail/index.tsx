@@ -2,7 +2,9 @@ import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams } from 'react-router-dom';
 import { getLocalUserData, setLocalUserData } from 'data/user/user.service';
+import Header from 'components/Header/Header';
 import movieMachine, { MovieContext } from './movieMachine';
+import styles from './index.module.scss';
 
 interface ParamsType {
   id: string;
@@ -10,24 +12,24 @@ interface ParamsType {
 
 export default function Detail() {
   const { id } = useParams<ParamsType>();
-
-  const persistedMachine = movieMachine.withConfig(
-    {
-      actions: { persist: (ctx: MovieContext) => setLocalUserData(ctx.user) },
-    },
-    // initial state from localStorage
-    {
-      id: (id as unknown) as number,
-      movie: null,
-      user: getLocalUserData(),
-    },
+  const [state, send] = useMachine(
+    movieMachine.withConfig(
+      {
+        actions: { persist: (ctx: MovieContext) => setLocalUserData(ctx.user) },
+      },
+      // initial state from localStorage
+      {
+        id: (id as unknown) as number,
+        movie: null,
+        user: getLocalUserData(),
+      },
+    ),
   );
-
-  const [state, send] = useMachine(persistedMachine);
   const { movie } = state.context;
 
   return (
-    <div>
+    <div className={styles.Detail}>
+      <Header />
       {state.value === 'loading' && <p>Loading...</p>}
       {state.value === 'failure' && <p>Failure</p>}
       {state.matches('loaded') && (

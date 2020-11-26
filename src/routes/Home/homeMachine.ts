@@ -1,42 +1,39 @@
-import { Machine, assign, DoneInvokeEvent, spawn } from 'xstate';
-import moviesMachine from './moviesMachine';
+import { Machine, assign, spawn } from 'xstate';
+import nowPlayingMoviesMachine from './nowPlayingMoviesMachine';
 
 interface HomeStateSchema {
   states: {
     idle: {};
-    fetched: {};
+    requested: {};
   };
 }
 
 interface HomeContext {
-  page: number;
-  movies: any;
+  nextPage: number;
+  nowPlayingList: any;
 }
 
-type HomeEvent = { type: 'FETCH'; page: number };
+type HomeEvent = { type: 'REQUEST'; page: number };
 
 const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>({
   id: 'Home',
   initial: 'idle',
   context: {
-    page: 1,
-    movies: {},
+    nextPage: 1,
+    nowPlayingList: [],
   },
   states: {
     idle: {},
-    fetched: {},
+    requested: {},
   },
   on: {
-    FETCH: {
-      target: 'fetched',
-      actions: assign((context, event) => {
-        const movies = spawn(moviesMachine);
+    REQUEST: {
+      target: 'requested',
+      actions: assign((context, _event) => {
+        const nowPlayingMovies = spawn(nowPlayingMoviesMachine(context.nextPage));
         return {
-          movies: {
-            ...context.movies,
-            [context.page]: movies,
-          },
-          page: context.page + 1,
+          nowPlayingList: [...context.nowPlayingList, nowPlayingMovies],
+          nextPage: context.nextPage + 1,
         };
       }),
     },

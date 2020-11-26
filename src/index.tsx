@@ -4,6 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-poppins';
 import './styles/globalStyles.scss';
+import './styles/normalize.css';
 
 ReactDOM.render(
   <React.StrictMode>
