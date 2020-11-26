@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams } from 'react-router-dom';
-import { getLocalUserData, setLocalUserData } from 'data/user/localData';
+import { getLocalUserData, setLocalUserData } from 'data/user/user.service';
 import createMovieMachine, { MovieContext } from './movieMachine';
 
 interface ParamsType {

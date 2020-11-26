@@ -1,4 +1,4 @@
-import { User } from 'types/User';
+import { User } from 'data/user/user.type';
 
 const FREE_BALANCE = 100000;
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMachine } from '@xstate/react';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
 import convertToSlug from 'utils/convertToSlug';
-import { getLocalUserData } from 'data/user/localData';
+import { getLocalUserData } from 'data/user/user.service';
 import { Movie } from 'data/movie/movie.type';
 import homeMachine from './moviesMachine';
 
