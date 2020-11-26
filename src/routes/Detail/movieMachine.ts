@@ -86,7 +86,7 @@ const movieMachine = Machine<MovieContext, MovieStateSchema, MovieEvent>(
   },
   {
     guards: {
-      isMovieAlreadyPurchased: (ctx): boolean => ctx.user.purchased_movies.includes(ctx.id!),
+      isMovieAlreadyPurchased: (ctx): boolean => ctx.user.purchased_movies.includes(ctx.movie!.id),
       isBalanceInsufficient: (ctx): boolean => ctx.user.balance < ctx.movie!.price,
     },
     actions: {

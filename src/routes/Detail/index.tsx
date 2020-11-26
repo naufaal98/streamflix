@@ -19,7 +19,7 @@ export default function Detail() {
       },
       // initial state from localStorage
       {
-        id: (id as unknown) as number,
+        id: parseInt(id, 10),
         movie: null,
         user: getLocalUserData(),
       },
@@ -42,7 +42,7 @@ export default function Detail() {
           </button>
         </div>
       )}
-      {console.log(state.value)}
+      {console.log(state.context)}
     </div>
   );
 }
