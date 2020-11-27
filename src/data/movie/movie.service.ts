@@ -24,8 +24,8 @@ export async function getNowPlayingMovies({
 
   const { data } = await axios.get<any>(URL, {
     params: {
-      ...params,
       api_key: API_KEY,
+      ...params,
     },
   });
 
@@ -53,8 +53,8 @@ export async function getRecommendedMovies(
 
   const { data } = await axios.get<any>(URL, {
     params: {
-      ...params,
       api_key: API_KEY,
+      ...params,
     },
   });
 
@@ -72,8 +72,8 @@ export async function getSimilarMovies(
 
   const { data } = await axios.get<any>(URL, {
     params: {
-      ...params,
       api_key: API_KEY,
+      ...params,
     },
   });
 
