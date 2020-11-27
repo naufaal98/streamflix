@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 export default function Home() {
   const [state, send] = useMachine(homeMachine);
-  const [userData, setUserData] = React.useState(getLocalUserData());
+  const [userData] = React.useState(getLocalUserData());
   const history = useHistory();
 
   const infiniteScroll = () => {
@@ -20,7 +20,6 @@ export default function Home() {
 
   React.useEffect(() => {
     send('REQUEST');
-    setUserData(getLocalUserData());
     window.addEventListener('scroll', infiniteScroll);
   }, []);
 
