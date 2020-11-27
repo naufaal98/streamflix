@@ -7,7 +7,6 @@ export const setInitialUserData = () => {
     balance: FREE_BALANCE,
     purchased_movies: [],
   };
-
   localStorage.setItem('user', JSON.stringify(user));
   return user;
 };
@@ -23,10 +22,7 @@ export const setLocalUserData = (user: User) => {
 
 export const getLocalUserData = () => {
   try {
-    if (!localStorage.getItem('user')) {
-      return setInitialUserData();
-    }
-
+    if (!localStorage.getItem('user')) return setInitialUserData();
     const user = JSON.parse(localStorage.getItem('user')!) || [];
     return {
       balance: user.balance,
