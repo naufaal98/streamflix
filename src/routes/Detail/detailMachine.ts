@@ -3,7 +3,7 @@ import MovieService from 'data/movie/movie.service';
 import { MovieDetail } from 'data/movie/movie.type';
 import { User } from 'data/user/user.type';
 
-interface MovieStateSchema {
+interface DetailStateSchema {
   states: {
     loading: {};
     failure: {};
@@ -18,17 +18,17 @@ interface MovieStateSchema {
   };
 }
 
-export interface MovieContext {
+export interface DetailContext {
   id: number | null;
   user: User;
   movie: MovieDetail | null;
 }
 
-type MovieEvent = { type: 'PURCHASE' } | { type: 'RETRY' };
+type DetailEvent = { type: 'PURCHASE' } | { type: 'RETRY' };
 
-const movieMachine = Machine<MovieContext, MovieStateSchema, MovieEvent>(
+const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
   {
-    id: 'Movie',
+    id: 'Detail',
     initial: 'loading',
     context: {
       id: null,
@@ -106,4 +106,4 @@ const movieMachine = Machine<MovieContext, MovieStateSchema, MovieEvent>(
   },
 );
 
-export default movieMachine;
+export default detailMachine;

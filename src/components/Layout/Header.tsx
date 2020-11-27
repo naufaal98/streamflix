@@ -1,16 +1,11 @@
+import { UserContext } from 'context/UserContext';
 import React from 'react';
-import UserService from 'data/user/user.service';
 import { Link } from 'react-router-dom';
 import formatToCurrency from 'utils/formatToCurrency';
 import styles from './Header.module.scss';
 
 export default function Header() {
-  const [balance, setBalance] = React.useState(UserService.getLocalData().balance);
-
-  React.useEffect(() => {
-    setBalance(UserService.getLocalData().balance);
-  });
-
+  const { userData } = React.useContext(UserContext);
   return (
     <header className={styles.Header}>
       <h1 className={styles.Logo}>
@@ -18,7 +13,7 @@ export default function Header() {
       </h1>
       <div className={styles.RightSide}>
         <div className={styles.Balance}>
-          Balance: <span>{formatToCurrency(balance)}</span>
+          Balance: <span>{formatToCurrency(userData.balance)}</span>
         </div>
       </div>
     </header>

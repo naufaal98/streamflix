@@ -2,7 +2,8 @@ import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams } from 'react-router-dom';
 import UserService from 'data/user/user.service';
-import movieMachine, { MovieContext } from './movieMachine';
+import { UserContext } from 'context/UserContext';
+import movieMachine, { DetailContext } from './detailMachine';
 import styles from './index.module.scss';
 
 interface ParamsType {
@@ -10,13 +11,19 @@ interface ParamsType {
 }
 
 export default function Detail() {
+  const { syncUserContext } = React.useContext(UserContext);
   const { id } = useParams<ParamsType>();
   const [state, send] = useMachine(
     movieMachine.withConfig(
       {
-        actions: { persist: (ctx: MovieContext) => UserService.setLocalData(ctx.user) },
+        actions: {
+          persist: (ctx: DetailContext) => {
+            UserService.setLocalData(ctx.user);
+            syncUserContext();
+          },
+        },
       },
-      // initial state from localStorage
+      // initial context from localStorage
       {
         id: parseInt(id, 10),
         movie: null,
