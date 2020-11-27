@@ -10,7 +10,6 @@ import styles from './index.module.scss';
 export default function Home() {
   const [state, send] = useMachine(homeMachine);
   const [userData, setUserData] = React.useState(getLocalUserData());
-  const { nowPlayingList } = state.context;
   const history = useHistory();
 
   const infiniteScroll = () => {
@@ -35,7 +34,7 @@ export default function Home() {
       <h2>Currently Playing in Indoesia </h2>
       <div className={styles.MoviesGrid}>
         {state.value === 'requested' &&
-          nowPlayingList.map((movieListPerPage: any) => (
+          state.context.nowPlayingList.map((movieListPerPage: any) => (
             <NowPlaying service={movieListPerPage} key={movieListPerPage.id} userData={userData} />
           ))}
       </div>

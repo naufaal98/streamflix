@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-poppins';
-import './styles/globalStyles.scss';
 import './styles/normalize.css';
+import './styles/globalStyles.scss';
 
 ReactDOM.render(
   <React.StrictMode>
