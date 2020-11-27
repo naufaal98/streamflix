@@ -1,3 +1,5 @@
+@use './mixins.scss';
+
 /* CSS Custom Properties Definitions */
 :root {
   --maxWidth-none: 'none';
@@ -11,11 +13,6 @@
   --maxWidth-4xl: 56rem;
   --maxWidth-full: '100%';
   --maxWidth-wrapper: 1366px;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
   --spacing-px: '1px';
   --spacing-0: 0;
   --spacing-1: 0.25rem;
