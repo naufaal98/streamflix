@@ -1,0 +1,35 @@
+.Header {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+}
+
+.Logo {
+  background-color: black;
+  color: var(--color-primary);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--fontSize-4);
+  font-weight: var(--fontWeight-bold);
+  transform: skew(-7deg);
+
+  a {
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 1rem;
+  }
+}
+
+.RightSide {
+  margin-left: auto;
+}
+
+.Balance {
+  color: var(--color-heading);
+  span {
+    color: var(--color-primary);
+    font-weight: var(--fontWeight-bold);
+  }
+}

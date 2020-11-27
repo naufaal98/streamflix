@@ -1,10 +1,7 @@
-.Home {
-  max-width: var(--maxWidth-wrapper);
-  width: 100%;
-  margin: auto;
-  padding: var(--spacing-8);
+.SectionTitle {
+  margin: 0;
+  margin-bottom: 20px;
 }
-
 .MoviesGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

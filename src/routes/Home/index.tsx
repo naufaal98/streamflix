@@ -1,7 +1,6 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
-import Header from 'components/Header/Header';
 import MovieCard from 'components/MovieCard/MovieCard';
 import UserService from 'data/user/user.service';
 import Spinner from 'components/Spinner/Spinner';
@@ -35,8 +34,7 @@ export default function Home() {
 
   return (
     <div className={styles.Home}>
-      <Header />
-      <h2>Currently Playing in Indoesia </h2>
+      <h2 className={styles.SectionTitle}>Currently Playing in Indoesia </h2>
       <div className={styles.MoviesGrid}>
         {state.context.movieList.map((movie: Movie) => (
           <div key={movie.id}>

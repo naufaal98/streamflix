@@ -2,7 +2,6 @@ import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams } from 'react-router-dom';
 import UserService from 'data/user/user.service';
-import Header from 'components/Header/Header';
 import movieMachine, { MovieContext } from './movieMachine';
 import styles from './index.module.scss';
 
@@ -29,7 +28,6 @@ export default function Detail() {
 
   return (
     <div className={styles.Detail}>
-      <Header />
       {state.value === 'loading' && <p>Loading...</p>}
       {state.value === 'failure' && <p>Failure</p>}
       {state.matches('loaded') && (
