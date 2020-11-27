@@ -1,5 +1,5 @@
 import { Machine, assign, spawn } from 'xstate';
-import nowPlayingMoviesMachine from './nowPlayingMoviesMachine';
+import nowPlayingMachine from './nowPlayingMachine';
 
 interface HomeStateSchema {
   states: {
@@ -11,14 +11,16 @@ interface HomeStateSchema {
 interface HomeContext {
   nextPage: number;
   nowPlayingList: any;
+  isPreviousRequestSuccess: boolean;
 }
 
-type HomeEvent = { type: 'REQUEST'; page: number };
+type HomeEvent = { type: 'REQUEST' } | { type: 'UPDATE.STATUS'; status: boolean };
 
 const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>({
   id: 'Home',
   initial: 'idle',
   context: {
+    isPreviousRequestSuccess: true,
     nextPage: 1,
     nowPlayingList: [],
   },
@@ -28,12 +30,22 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>({
   },
   on: {
     REQUEST: {
+      cond: (ctx): boolean => ctx.isPreviousRequestSuccess,
       target: 'requested',
       actions: assign((context, _event) => {
-        const nowPlayingMovies = spawn(nowPlayingMoviesMachine(context.nextPage));
+        const nowPlayingMovies = spawn(nowPlayingMachine(context.nextPage));
         return {
           nowPlayingList: [...context.nowPlayingList, nowPlayingMovies],
           nextPage: context.nextPage + 1,
+        };
+      }),
+    },
+    'UPDATE.STATUS': {
+      target: 'requested',
+      actions: assign((context, event) => {
+        return {
+          ...context,
+          isPreviousRequestSuccess: event.status,
         };
       }),
     },

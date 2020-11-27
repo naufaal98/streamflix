@@ -1,14 +1,14 @@
 import React from 'react';
-import { Interpreter, AnyEventObject } from 'xstate';
+import { Interpreter } from 'xstate';
 import { useActor } from '@xstate/react';
 import { User } from 'data/user/user.type';
 import MovieCard from 'components/MovieCard/MovieCard';
 import Spinner from 'components/Spinner/Spinner';
-import { NowPlayingMoviesContext, NowPlayingMoviesStateSchema } from './nowPlayingMoviesMachine';
-import styles from './NowPlayingMovies.module.scss';
+import { NowPlayingContext, NowPlayingStateSchema } from './nowPlayingMachine';
+import styles from './NowPlaying.module.scss';
 
 interface Props {
-  service: Interpreter<NowPlayingMoviesContext, NowPlayingMoviesStateSchema, any, any>;
+  service: Interpreter<NowPlayingContext, NowPlayingStateSchema, any, any>;
   userData: User;
 }
 

@@ -3,7 +3,7 @@ import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import { getLocalUserData } from 'data/user/user.service';
-import NowPlayingMovies from './NowPlayingMovies';
+import NowPlaying from './NowPlaying';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
 
@@ -36,15 +36,9 @@ export default function Home() {
       <div className={styles.MoviesGrid}>
         {state.value === 'requested' &&
           nowPlayingList.map((movieListPerPage: any) => (
-            <NowPlayingMovies
-              service={movieListPerPage}
-              key={movieListPerPage.id}
-              userData={userData}
-            />
+            <NowPlaying service={movieListPerPage} key={movieListPerPage.id} userData={userData} />
           ))}
       </div>
-      {state.matches('requested') && <p>Requested</p>}
-      {state.matches('idle') && <p>Idle</p>}
     </div>
   );
 }
