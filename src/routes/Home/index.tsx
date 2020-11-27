@@ -3,7 +3,7 @@ import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import MovieCard from 'components/MovieCard/MovieCard';
-import { getLocalUserData } from 'data/user/user.service';
+import UserService from 'data/user/user.service';
 import Spinner from 'components/Spinner/Spinner';
 import { Movie } from 'data/movie/movie.type';
 import homeMachine from './homeMachine';
@@ -11,7 +11,7 @@ import styles from './index.module.scss';
 
 export default function Home() {
   const [state, send] = useMachine(homeMachine);
-  const [userData] = React.useState(getLocalUserData());
+  const [userData] = React.useState(UserService.getLocalData());
   const history = useHistory();
 
   const infiniteScroll = () => {

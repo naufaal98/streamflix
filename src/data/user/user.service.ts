@@ -2,7 +2,7 @@ import { User } from 'data/user/user.type';
 
 const FREE_BALANCE = 100000;
 
-export const setInitialUserData = () => {
+const setInitialData = () => {
   const user: User = {
     balance: FREE_BALANCE,
     purchased_movies: [],
@@ -11,7 +11,7 @@ export const setInitialUserData = () => {
   return user;
 };
 
-export const setLocalUserData = (user: User) => {
+const setLocalData = (user: User) => {
   try {
     localStorage.setItem('user', JSON.stringify(user));
   } catch (e) {
@@ -20,9 +20,9 @@ export const setLocalUserData = (user: User) => {
   }
 };
 
-export const getLocalUserData = () => {
+const getLocalData = () => {
   try {
-    if (!localStorage.getItem('user')) return setInitialUserData();
+    if (!localStorage.getItem('user')) return setInitialData();
     const user = JSON.parse(localStorage.getItem('user')!) || [];
     return {
       balance: user.balance,
@@ -35,3 +35,5 @@ export const getLocalUserData = () => {
     };
   }
 };
+
+export default { setLocalData, getLocalData };

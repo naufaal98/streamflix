@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams } from 'react-router-dom';
-import { getLocalUserData, setLocalUserData } from 'data/user/user.service';
+import UserService from 'data/user/user.service';
 import Header from 'components/Header/Header';
 import movieMachine, { MovieContext } from './movieMachine';
 import styles from './index.module.scss';
@@ -15,13 +15,13 @@ export default function Detail() {
   const [state, send] = useMachine(
     movieMachine.withConfig(
       {
-        actions: { persist: (ctx: MovieContext) => setLocalUserData(ctx.user) },
+        actions: { persist: (ctx: MovieContext) => UserService.setLocalData(ctx.user) },
       },
       // initial state from localStorage
       {
         id: parseInt(id, 10),
         movie: null,
-        user: getLocalUserData(),
+        user: UserService.getLocalData(),
       },
     ),
   );
