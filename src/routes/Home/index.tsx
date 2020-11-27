@@ -2,8 +2,8 @@ import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
 import Header from 'components/Header/Header';
+import MovieCard from 'components/MovieCard/MovieCard';
 import { getLocalUserData } from 'data/user/user.service';
-import NowPlaying from './NowPlaying';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
 
@@ -15,27 +15,33 @@ export default function Home() {
   const infiniteScroll = () => {
     const innerHeightPlusScrollTop = window.innerHeight + document.documentElement.scrollTop;
     const { offsetHeight } = document.documentElement;
-    if (innerHeightPlusScrollTop === offsetHeight) send('REQUEST');
+    if (innerHeightPlusScrollTop === offsetHeight) {
+      send({ type: 'FETCH', page: state.context.page + 1 });
+    }
   };
 
   React.useEffect(() => {
-    send('REQUEST');
-    window.addEventListener('scroll', infiniteScroll);
-  }, []);
-
-  React.useEffect(() => {
-    history.replace({ pathname: `/?page=${state.context.nextPage - 1}` });
+    window.onscroll = () => infiniteScroll();
+    history.replace({ pathname: `/?page=${state.context.page}` });
   });
 
   return (
     <div className={styles.Home}>
       <Header />
+      {console.log(state.context)}
       <h2>Currently Playing in Indoesia </h2>
       <div className={styles.MoviesGrid}>
-        {state.value === 'requested' &&
-          state.context.nowPlayingList.map((movieListPerPage: any) => (
-            <NowPlaying service={movieListPerPage} key={movieListPerPage.id} userData={userData} />
-          ))}
+        {state.context.movieList.map((movie: any) => (
+          <div key={movie.id}>
+            <MovieCard
+              movie={movie}
+              isPurchased={userData.purchased_movies.includes(movie.id)}
+              key={movie.id}
+            />
+            <p>{movie.id}</p>
+            <p>{state.context.page}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
