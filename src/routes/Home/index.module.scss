@@ -21,10 +21,6 @@
   @media (min-width: 992px) {
     grid-template-columns: repeat(5, 1fr);
   }
-
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(7, 1fr);
-  }
 }
 
 .Feedback {
