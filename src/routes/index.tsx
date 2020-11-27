@@ -10,6 +10,9 @@ const Routes = () => {
       <Route path="/:id-:slug">
         <Detail />
       </Route>
+      <Route path="/?page=:page">
+        <Home />
+      </Route>
       <Route exact path="/">
         <Home />
       </Route>
