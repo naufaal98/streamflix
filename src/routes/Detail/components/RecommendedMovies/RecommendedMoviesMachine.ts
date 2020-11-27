@@ -1,6 +1,6 @@
 import { Machine, assign, DoneInvokeEvent } from 'xstate';
 import { Movie, MovieList } from 'data/movie/movie.type';
-import { getRecommendedMovies } from 'data/movie/movie.service';
+import MovieService from 'data/movie/movie.service';
 
 interface RecommendedMoviesStateSchema {
   states: {
@@ -49,7 +49,7 @@ const createRecommendedMoviesMachine = (id: number) =>
     },
     {
       services: {
-        getRecommendedMovies: (ctx) => getRecommendedMovies(ctx.id, { page: 1 }),
+        getRecommendedMovies: (ctx) => MovieService.getRecommended(ctx.id, { page: 1 }),
       },
     },
   );

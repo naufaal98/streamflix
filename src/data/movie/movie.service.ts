@@ -11,71 +11,63 @@ interface MovieListParams {
   region?: string;
 }
 
-export async function getNowPlayingMovies({
-  page = 1,
-  language,
-  region,
-}: MovieListParams): Promise<MovieList> {
-  const params: MovieListParams = { page };
-  if (language) params.language = language;
-  if (region) params.region = region;
+export default {
+  async getNowPlaying({ page = 1, language, region }: MovieListParams): Promise<MovieList> {
+    const params: MovieListParams = { page };
+    if (language) params.language = language;
+    if (region) params.region = region;
 
-  const URL = `${BASE_URL}/now_playing`;
+    const URL = `${BASE_URL}/now_playing`;
 
-  const { data } = await axios.get<any>(URL, {
-    params: {
-      api_key: API_KEY,
-      ...params,
-    },
-  });
+    const { data } = await axios.get<any>(URL, {
+      params: {
+        api_key: API_KEY,
+        ...params,
+      },
+    });
 
-  return movieListAdapter(data);
-}
+    return movieListAdapter(data);
+  },
 
-export async function getMovieDetail(id: number): Promise<MovieDetail> {
-  const URL_DETAIL = `${BASE_URL}/${id}`;
-  const URL_CREDIT = `${BASE_URL}/${id}/credits`;
+  async getDetail(id: number): Promise<MovieDetail> {
+    const URL_DETAIL = `${BASE_URL}/${id}`;
+    const URL_CREDIT = `${BASE_URL}/${id}/credits`;
 
-  const { data: movie } = await axios.get<any>(URL_DETAIL, { params: { api_key: API_KEY } });
-  const { data: credit } = await axios.get<any>(URL_CREDIT, { params: { api_key: API_KEY } });
+    const { data: movie } = await axios.get<any>(URL_DETAIL, { params: { api_key: API_KEY } });
+    const { data: credit } = await axios.get<any>(URL_CREDIT, { params: { api_key: API_KEY } });
 
-  return movieDetailAdapter(movie, credit.cast);
-}
+    return movieDetailAdapter(movie, credit.cast);
+  },
 
-export async function getRecommendedMovies(
-  id: number,
-  { page = 1, language }: MovieListParams,
-): Promise<MovieList> {
-  const params: MovieListParams = { page };
-  if (language) params.language = language;
+  async getRecommended(id: number, { page = 1, language }: MovieListParams): Promise<MovieList> {
+    const params: MovieListParams = { page };
+    if (language) params.language = language;
 
-  const URL = `${BASE_URL}/${id}/recommendations`;
+    const URL = `${BASE_URL}/${id}/recommendations`;
 
-  const { data } = await axios.get<any>(URL, {
-    params: {
-      api_key: API_KEY,
-      ...params,
-    },
-  });
+    const { data } = await axios.get<any>(URL, {
+      params: {
+        api_key: API_KEY,
+        ...params,
+      },
+    });
 
-  return movieListAdapter(data);
-}
+    return movieListAdapter(data);
+  },
 
-export async function getSimilarMovies(
-  id: number,
-  { page = 1, language }: MovieListParams,
-): Promise<MovieList> {
-  const params: MovieListParams = { page };
-  if (language) params.language = language;
+  async getSimilar(id: number, { page = 1, language }: MovieListParams): Promise<MovieList> {
+    const params: MovieListParams = { page };
+    if (language) params.language = language;
 
-  const URL = `${BASE_URL}/${id}/similar`;
+    const URL = `${BASE_URL}/${id}/similar`;
 
-  const { data } = await axios.get<any>(URL, {
-    params: {
-      api_key: API_KEY,
-      ...params,
-    },
-  });
+    const { data } = await axios.get<any>(URL, {
+      params: {
+        api_key: API_KEY,
+        ...params,
+      },
+    });
 
-  return movieListAdapter(data);
-}
+    return movieListAdapter(data);
+  },
+};

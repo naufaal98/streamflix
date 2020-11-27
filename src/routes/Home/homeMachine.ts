@@ -1,6 +1,6 @@
 import { Machine, assign, DoneInvokeEvent } from 'xstate';
 import { Movie, MovieList } from 'data/movie/movie.type';
-import { getNowPlayingMovies } from 'data/movie/movie.service';
+import MovieService from 'data/movie/movie.service';
 
 export interface HomeStateSchema {
   states: {
@@ -35,7 +35,6 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
           onDone: {
             target: 'loaded',
             actions: [
-              (ctx) => console.log('INVOKING', ctx.page),
               assign<HomeContext, DoneInvokeEvent<MovieList>>({
                 movieList: (ctx: HomeContext, event) => ctx.movieList.concat(event.data.results),
                 pageFetched: (ctx) => ctx.pageFetched.concat(ctx.page),
@@ -65,7 +64,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
   },
   {
     services: {
-      invokeGetMovieList: (ctx) => getNowPlayingMovies({ page: ctx.page }),
+      invokeGetMovieList: (ctx) => MovieService.getNowPlaying({ page: ctx.page }),
     },
   },
 );

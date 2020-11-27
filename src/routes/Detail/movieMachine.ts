@@ -1,5 +1,5 @@
 import { Machine, assign } from 'xstate';
-import { getMovieDetail } from 'data/movie/movie.service';
+import MovieService from 'data/movie/movie.service';
 import { MovieDetail } from 'data/movie/movie.type';
 import { User } from 'data/user/user.type';
 
@@ -101,7 +101,7 @@ const movieMachine = Machine<MovieContext, MovieStateSchema, MovieEvent>(
       }),
     },
     services: {
-      getMovieDetail: (ctx) => getMovieDetail(ctx.id!),
+      getMovieDetail: (ctx) => MovieService.getDetail(ctx.id!),
     },
   },
 );
