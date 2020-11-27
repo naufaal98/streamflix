@@ -20,7 +20,7 @@ export type HomeEvent = { type: 'RETRY' } | { type: 'FETCH'; page: number };
 
 const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
   {
-    id: 'Movies',
+    id: 'Home',
     initial: 'loading',
     context: {
       page: 1,
@@ -34,12 +34,10 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
           src: 'invokeGetMovieList',
           onDone: {
             target: 'loaded',
-            actions: [
-              assign<HomeContext, DoneInvokeEvent<MovieList>>({
-                movieList: (ctx: HomeContext, event) => ctx.movieList.concat(event.data.results),
-                pageFetched: (ctx) => ctx.pageFetched.concat(ctx.page),
-              }),
-            ],
+            actions: assign<HomeContext, DoneInvokeEvent<MovieList>>({
+              movieList: (ctx: HomeContext, event) => ctx.movieList.concat(event.data.results),
+              pageFetched: (ctx) => ctx.pageFetched.concat(ctx.page),
+            }),
           },
           onError: 'failure',
         },
