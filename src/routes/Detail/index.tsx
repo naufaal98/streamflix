@@ -42,7 +42,6 @@ export default function Detail() {
           </button>
         </div>
       )}
-      {console.log(state.context)}
     </div>
   );
 }
