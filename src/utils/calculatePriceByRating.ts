@@ -1,5 +1,5 @@
 export default function calculatePriceByRating(rating: number): number {
-  if (rating > 1 && rating <= 3) {
+  if (rating >= 1 && rating <= 3) {
     return 3500;
   }
   if (rating > 3 && rating <= 6) {
