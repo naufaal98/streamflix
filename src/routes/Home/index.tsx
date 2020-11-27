@@ -3,7 +3,6 @@ import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
 import Header from 'components/Header/Header';
 import { getLocalUserData } from 'data/user/user.service';
-import { off } from 'process';
 import NowPlayingMovies from './NowPlayingMovies';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
@@ -43,7 +42,6 @@ export default function Home() {
               userData={userData}
             />
           ))}
-        <div>Loading...</div>
       </div>
       {state.matches('requested') && <p>Requested</p>}
       {state.matches('idle') && <p>Idle</p>}
