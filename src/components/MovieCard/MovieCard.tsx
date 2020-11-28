@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Movie } from 'data/movie/movie.type';
 import formatToCurrency from 'utils/formatToCurrency';
+import PurchasedIcon from 'components/PurchasedIcon/PurchasedIcon';
 import styles from './MovieCard.module.scss';
 
 const MovieCard = ({ movie, isPurchased }: { movie: Movie; isPurchased: boolean }) => {
@@ -26,9 +27,9 @@ const MovieCard = ({ movie, isPurchased }: { movie: Movie; isPurchased: boolean 
             <div className={styles.RatingScore}>{movie.rating}</div>
           </div>
           {isPurchased && (
-            <span className={styles.PurchaseStatus} aria-label="purchased">
-              ✓
-            </span>
+            <div className={styles.PurchaseStatus}>
+              <PurchasedIcon />
+            </div>
           )}
         </div>
       </div>
