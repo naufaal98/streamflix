@@ -103,7 +103,7 @@ export default function Detail() {
             <div className={styles.PosterSection}>
               <img
                 className={styles.Poster}
-                src={`https://image.tmdb.org/t/p/w300/${movie!.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w400/${movie!.poster_path}`}
                 alt={movie?.title}
               />
             </div>

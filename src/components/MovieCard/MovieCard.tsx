@@ -14,7 +14,7 @@ const MovieCard = ({ movie, isPurchased }: { movie: Movie; isPurchased: boolean 
       <Link to={detailUrl}>
         <img
           className={styles.Poster}
-          src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
           alt={movie.title}
         />
       </Link>
