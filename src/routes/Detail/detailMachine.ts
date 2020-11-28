@@ -11,8 +11,8 @@ interface DetailStateSchema {
       states: {
         idle: {};
         insufficientBalance: {};
-        movieAlreadyPurchased: {};
-        purchaseSuccess: {};
+        purchasing: {};
+        purchased: {};
       };
     };
   };
@@ -54,25 +54,33 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
         initial: 'idle',
         states: {
           idle: {
-            always: [{ target: 'movieAlreadyPurchased', cond: 'isMovieAlreadyPurchased' }],
+            always: [{ target: 'purchased', cond: 'isMovieAlreadyPurchased' }],
           },
-          movieAlreadyPurchased: {},
           insufficientBalance: {},
-          purchaseSuccess: {},
+          purchasing: {
+            invoke: {
+              id: 'purchase-movie',
+              src: 'purchaseMovie',
+              onDone: {
+                target: 'purchased',
+                actions: ['assignUserContext', 'persist'],
+              },
+            },
+          },
+          purchased: {},
         },
         on: {
           PURCHASE: [
             {
               cond: 'isMovieAlreadyPurchased',
-              target: 'loaded.movieAlreadyPurchased',
+              target: 'loaded.purchased',
             },
             {
               cond: 'isBalanceInsufficient',
               target: 'loaded.insufficientBalance',
             },
             {
-              actions: ['purchaseMovie', 'persist'],
-              target: 'loaded.purchaseSuccess',
+              target: 'loaded.purchasing',
             },
           ],
         },
@@ -90,7 +98,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
       isBalanceInsufficient: (ctx): boolean => ctx.user.balance < ctx.movie!.price,
     },
     actions: {
-      purchaseMovie: assign({
+      assignUserContext: assign({
         user: (context, _event) => ({
           balance: context.user.balance - context.movie!.price,
           purchased_movies: [...context.user.purchased_movies, context.id!],
@@ -102,6 +110,10 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
     },
     services: {
       getMovieDetail: (ctx) => MovieService.getDetail(ctx.id!),
+      purchaseMovie: () =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 2000);
+        }),
     },
   },
 );
