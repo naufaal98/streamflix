@@ -111,7 +111,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
       assignUserContext: assign({
         user: (context, _event) => ({
           balance: context.user.balance - context.movie!.price,
-          purchased_movies: [...context.user.purchased_movies, context.id!],
+          purchased_movies: [...context.user.purchased_movies, context.movie!.id],
         }),
       }),
       storeMovieData: assign({
