@@ -11,6 +11,8 @@ import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
 import detailMachine, { DetailContext } from './detailMachine';
 import styles from './index.module.scss';
+import SimilarMovies from './components/SimilarMovies/SimilarMovies';
+import RecommendedMovies from './components/RecommendedMovies/RecommendedMovies';
 
 function convertTime(num: number) {
   const hours = Math.floor(num / 60);
@@ -55,52 +57,57 @@ export default function Detail() {
         </div>
       )}
       {state.matches('loaded') && (
-        <div className={styles.MovieSection}>
-          <div className={styles.PosterSection}>
-            <img
-              className={styles.Poster}
-              src={`https://image.tmdb.org/t/p/w300/${movie!.poster_path}`}
-              alt={movie?.title}
-            />
-          </div>
-          <div className={styles.Description}>
-            <h2 className={styles.MovieTitle}>
-              <span>{movie!.title}</span>
-              {state.matches('loaded.purchased') && <PurchasedIcon />}
-            </h2>
-            <div className={styles.Info}>
-              <div className={styles.InfoFirstRow}>
-                <Rating score={movie!.rating} />
-                <span className={styles.Duration}>{convertTime(movie!.duration)}</span>
+        <>
+          <div className={styles.MovieSection}>
+            <div className={styles.PosterSection}>
+              <img
+                className={styles.Poster}
+                src={`https://image.tmdb.org/t/p/w300/${movie!.poster_path}`}
+                alt={movie?.title}
+              />
+            </div>
+            <div className={styles.Description}>
+              <h2 className={styles.MovieTitle}>
+                <span>{movie!.title}</span>
+                {state.matches('loaded.purchased') && <PurchasedIcon />}
+              </h2>
+              <div className={styles.Info}>
+                <div className={styles.InfoFirstRow}>
+                  <Rating score={movie!.rating} />
+                  <span className={styles.Duration}>{convertTime(movie!.duration)}</span>
+                </div>
+                <div className={styles.InfoSecondRow}>
+                  {movie!.genres.map((genre) => (
+                    <span className={styles.Genre} key={genre.id}>
+                      {genre.name}{' '}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className={styles.InfoSecondRow}>
-                {movie!.genres.map((genre) => (
-                  <span className={styles.Genre} key={genre.id}>
-                    {genre.name}{' '}
-                  </span>
-                ))}
+              <div className={styles.BuyOption}>
+                <Button onClick={() => send('PURCHASE')}>
+                  <span className={styles.Price}>{formatToCurrency(movie!.price)}</span>
+                  Buy
+                </Button>
+                <Button kind="secondary">Add to Whistlist</Button>
+              </div>
+              <p className={styles.Overview}>{movie!.overview}</p>
+              <div className={styles.CastSection}>
+                <h3 className={styles.CastTitle}>Cast</h3>
+                <ul className={styles.CastList}>
+                  {movie!.casts.map((cast) => (
+                    <li key={cast.id} className={styles.Cast}>
+                      {cast.name}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <div className={styles.BuyOption}>
-              <Button onClick={() => send('PURCHASE')}>
-                <span className={styles.Price}>{formatToCurrency(movie!.price)}</span>
-                Buy
-              </Button>
-              <Button kind="secondary">Add to Whistlist</Button>
-            </div>
-            <p className={styles.Overview}>{movie!.overview}</p>
-            <div className={styles.CastSection}>
-              <h3 className={styles.CastTitle}>Cast</h3>
-              <ul className={styles.CastList}>
-                {movie!.casts.map((cast) => (
-                  <li key={cast.id} className={styles.Cast}>
-                    {cast.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
-        </div>
+
+          <SimilarMovies id={movie!.id} />
+          <RecommendedMovies id={movie!.id} />
+        </>
       )}
     </div>
   );

@@ -17,7 +17,7 @@ interface RecommendedMoviesContext {
 
 type RecommendedMoviesEvent = { type: 'RETRY' };
 
-const createRecommendedMoviesMachine = (id: number) =>
+const recommendedMoviesMachine = (id: number) =>
   Machine<RecommendedMoviesContext, RecommendedMoviesStateSchema, RecommendedMoviesEvent>(
     {
       initial: 'loading',
@@ -33,7 +33,7 @@ const createRecommendedMoviesMachine = (id: number) =>
             onDone: {
               target: 'loaded',
               actions: assign<RecommendedMoviesContext, DoneInvokeEvent<MovieList>>({
-                movieList: (_ctx, event: any) => event.data,
+                movieList: (_ctx, event: any) => event.data.results,
               }),
             },
             onError: 'failure',
@@ -54,4 +54,4 @@ const createRecommendedMoviesMachine = (id: number) =>
     },
   );
 
-export default createRecommendedMoviesMachine;
+export default recommendedMoviesMachine;

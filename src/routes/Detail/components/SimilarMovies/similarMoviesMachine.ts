@@ -17,7 +17,7 @@ interface SimilarMoviesContext {
 
 type SimilarMoviesEvent = { type: 'RETRY' };
 
-const createRecommendationMoviesMachine = (id: number) =>
+const similarMoviesMachine = (id: number) =>
   Machine<SimilarMoviesContext, SimilarMoviesStateSchema, SimilarMoviesEvent>(
     {
       initial: 'loading',
@@ -33,7 +33,7 @@ const createRecommendationMoviesMachine = (id: number) =>
             onDone: {
               target: 'loaded',
               actions: assign<SimilarMoviesContext, DoneInvokeEvent<MovieList>>({
-                movieList: (_ctx, event: any) => event.data,
+                movieList: (_ctx, event: any) => event.data.results,
               }),
             },
             onError: 'failure',
@@ -54,4 +54,4 @@ const createRecommendationMoviesMachine = (id: number) =>
     },
   );
 
-export default createRecommendationMoviesMachine;
+export default similarMoviesMachine;
