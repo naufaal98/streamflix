@@ -1,15 +1,24 @@
+.Button {
+  cursor: pointer;
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
 .Primary {
+  composes: Button;
   background-color: var(--color-primary);
   color: #fff;
   padding: 8px 20px;
   border: none;
-  cursor: pointer;
 }
 
 .Secondary {
+  composes: Button;
   color: var(--color-primary);
   background-color: #fff;
   padding: 7px 19px;
   border: 1px solid var(--color-primary);
-  cursor: pointer;
 }
