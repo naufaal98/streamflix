@@ -32,6 +32,10 @@
   gap: var(--spacing-8);
 }
 
+.SubTitle {
+  font-size: var(--fontSize-3);
+}
+
 .Info {
   margin-bottom: var(--spacing-5);
   display: flex;
@@ -78,13 +82,22 @@
   margin-bottom: var(--spacing-5);
 }
 
+.MovieIsPurchased {
+  font-weight: var(--fontWeight-bold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: green;
+}
+
+.InsufficientBalance {
+  font-weight: var(--fontWeight-bold);
+  color: var(--color-primary);
+}
+
 .Price {
   margin: 0;
   margin-right: 5px;
-}
-
-.CastTitle {
-  font-size: var(--fontSize-3);
 }
 
 .CastList {

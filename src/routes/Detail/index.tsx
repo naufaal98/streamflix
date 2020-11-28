@@ -47,6 +47,8 @@ export default function Detail() {
     send({ type: 'FETCH', id: (id as unknown) as number });
   }, [id]);
 
+  const nestState = state; // To fix nested state.matches issue
+
   return (
     <div className={styles.Detail}>
       {state.value === 'loading' && (
@@ -54,12 +56,14 @@ export default function Detail() {
           <Spinner />
         </div>
       )}
+
       {state.value === 'failure' && (
         <div className={styles.Feedback}>
           <p>Something went wrong, please try again</p>
           <Button onClick={() => send('RETRY')}>RETRY</Button>
         </div>
       )}
+
       {state.matches('loaded') && (
         <>
           <div className={styles.MovieSection}>
@@ -73,7 +77,7 @@ export default function Detail() {
             <div className={styles.Description}>
               <h2 className={styles.MovieTitle}>
                 <span>{movie!.title}</span>
-                {state.matches('loaded.purchased') && <PurchasedIcon />}
+                {state.matches('loaded.purchased')}
               </h2>
               <div className={styles.Info}>
                 <div className={styles.InfoFirstRow}>
@@ -83,21 +87,43 @@ export default function Detail() {
                 <div className={styles.InfoSecondRow}>
                   {movie!.genres.map((genre) => (
                     <span className={styles.Genre} key={genre.id}>
-                      {genre.name}{' '}
+                      {genre.name}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className={styles.BuyOption}>
-                <Button onClick={() => send('PURCHASE')}>
-                  <span className={styles.Price}>{formatToCurrency(movie!.price)}</span>
-                  Buy
-                </Button>
-                <Button kind="secondary">Add to Whistlist</Button>
+
+              {!state.matches('loaded.purchased') && (
+                <div className={styles.BuyOption}>
+                  <Button onClick={() => send('PURCHASE')}>
+                    {nestState.matches('loaded.purchasing') && 'Purchasing...'}
+
+                    {!nestState.matches('loaded.purchasing') && (
+                      <>{formatToCurrency(movie!.price)}&nbsp;Buy</>
+                    )}
+                  </Button>
+                  <Button kind="secondary">Add to Whistlist</Button>
+                </div>
+              )}
+
+              <div className={styles.PurchaseStatus}>
+                {state.matches('loaded.purchased') && (
+                  <p className={styles.MovieIsPurchased}>
+                    <span>This movie is in your library</span> <PurchasedIcon />
+                  </p>
+                )}
+                {state.matches('loaded.insufficientBalance') && (
+                  <p className={styles.InsufficientBalance}>
+                    Sorry, your balance is not enough to purchase this movie.
+                  </p>
+                )}
               </div>
+
+              <h3 className={styles.SubTitle}>Overview</h3>
               <p className={styles.Overview}>{movie!.overview}</p>
+
               <div className={styles.CastSection}>
-                <h3 className={styles.CastTitle}>Cast</h3>
+                <h3 className={styles.SubTitle}>Cast</h3>
                 <ul className={styles.CastList}>
                   {movie!.casts.map((cast) => (
                     <li key={cast.id} className={styles.Cast}>

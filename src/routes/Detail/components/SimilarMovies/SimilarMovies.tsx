@@ -20,17 +20,20 @@ export default function SimilarMovies({ id }: { id: number }) {
     <div className={styles.SimilarMovies}>
       <h3>Similar Movies</h3>
       {state.value === 'loaded' && (
-        <div className={styles.MoviesGrid}>
-          {state.context.movieList.slice(0, 6).map((movie: Movie) => (
-            <div key={movie.id}>
-              <MovieCard
-                movie={movie}
-                isPurchased={userData.purchased_movies.includes(movie.id)}
-                key={movie.id}
-              />
-            </div>
-          ))}
-        </div>
+        <>
+          <div className={styles.MoviesGrid}>
+            {state.context.movieList.slice(0, 6).map((movie: Movie) => (
+              <div key={movie.id}>
+                <MovieCard
+                  movie={movie}
+                  isPurchased={userData.purchased_movies.includes(movie.id)}
+                  key={movie.id}
+                />
+              </div>
+            ))}
+          </div>
+          {state.context.movieList.length === 0 && <p>Sorry, we couldn&apos;t find anything :(</p>}
+        </>
       )}
       {state.value === 'failure' && (
         <div className={styles.Feedback}>
