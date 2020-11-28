@@ -5,6 +5,7 @@ import { User } from 'data/user/user.type';
 
 interface DetailStateSchema {
   states: {
+    idle: {};
     loading: {};
     failure: {};
     loaded: {
@@ -24,12 +25,12 @@ export interface DetailContext {
   movie: MovieDetail | null;
 }
 
-type DetailEvent = { type: 'PURCHASE' } | { type: 'RETRY' };
+type DetailEvent = { type: 'FETCH'; id: number } | { type: 'PURCHASE' } | { type: 'RETRY' };
 
 const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
   {
     id: 'Detail',
-    initial: 'loading',
+    initial: 'idle',
     context: {
       id: null,
       user: {
@@ -39,6 +40,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
       movie: null,
     },
     states: {
+      idle: {},
       loading: {
         invoke: {
           id: 'get-movie-detail',
@@ -91,6 +93,14 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
         },
       },
     },
+    on: {
+      FETCH: {
+        target: 'loading',
+        actions: assign({
+          id: (_ctx, event) => event.id,
+        }),
+      },
+    },
   },
   {
     guards: {
@@ -112,7 +122,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
       getMovieDetail: (ctx) => MovieService.getDetail(ctx.id!),
       purchaseMovie: () =>
         new Promise((resolve) => {
-          setTimeout(resolve, 2000);
+          setTimeout(resolve, 500);
         }),
     },
   },

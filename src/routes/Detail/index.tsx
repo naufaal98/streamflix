@@ -33,15 +33,19 @@ export default function Detail() {
           },
         },
       },
-      // initial context from localStorage
       {
-        id: parseInt(id, 10),
+        id: null,
         movie: null,
+        // initial context from localStorage
         user: UserService.getLocalData(),
       },
     ),
   );
   const { movie } = state.context;
+
+  React.useEffect(() => {
+    send({ type: 'FETCH', id: (id as unknown) as number });
+  }, [id]);
 
   return (
     <div className={styles.Detail}>
