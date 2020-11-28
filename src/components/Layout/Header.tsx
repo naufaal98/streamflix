@@ -8,10 +8,15 @@ export default function Header() {
   const { userData } = React.useContext(UserContext);
   return (
     <header className={styles.Header}>
-      <h1 className={styles.Logo}>
-        <Link to="/">StreamFlix</Link>
+      <h1 className={styles.LogoWrapper}>
+        <Link to="/" className={styles.Logo}>
+          StreamFlix
+        </Link>
       </h1>
       <div className={styles.RightSide}>
+        <nav className={styles.Navigation}>
+          <Link to="/library">Library</Link>
+        </nav>
         <div className={styles.Balance}>
           Balance: <span>{formatToCurrency(userData.balance)}</span>
         </div>

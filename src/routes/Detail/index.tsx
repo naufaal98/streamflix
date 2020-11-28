@@ -31,8 +31,8 @@ function MovieList({
   listTitle: string;
 }) {
   return (
-    <div className={styles.SimilarMovies}>
-      <h3>{listTitle}</h3>
+    <>
+      <h2>{listTitle}</h2>
       <div className={styles.MoviesGrid}>
         {movies.slice(0, 6).map((movie: Movie) => (
           <div key={movie.id}>
@@ -47,7 +47,7 @@ function MovieList({
         ))}
       </div>
       {movies.length === 0 && <p>Sorry, we couldn&apos;t find anything :(</p>}
-    </div>
+    </>
   );
 }
 

@@ -4,31 +4,45 @@
   align-items: center;
 }
 
+.LogoWrapper {
+  margin: 0;
+}
+
 .Logo {
   background-color: black;
   color: var(--color-primary);
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: var(--fontSize-4);
   font-weight: var(--fontWeight-bold);
   transform: skew(-7deg);
   border-radius: 4px;
 
-  a {
-    text-decoration: none;
-    display: block;
-    padding: 0.5rem 1rem;
-  }
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 1rem;
+  text-align: center;
 }
 
 .RightSide {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.Navigation {
+  margin-right: 30px;
+
+  a {
+    text-decoration: none;
+    font-weight: var(--fontWeight-bold);
+  }
 }
 
 .Balance {
   color: var(--color-heading);
+  border: 1.5px solid var(--color-heading);
+  padding: 10px;
+  border-radius: 4px;
   span {
     color: var(--color-primary);
     font-weight: var(--fontWeight-bold);
