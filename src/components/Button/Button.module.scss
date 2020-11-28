@@ -1,0 +1,15 @@
+.Primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 8px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.Secondary {
+  color: var(--color-primary);
+  background-color: #fff;
+  padding: 7px 19px;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+}

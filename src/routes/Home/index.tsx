@@ -5,6 +5,7 @@ import MovieCard from 'components/MovieCard/MovieCard';
 import UserService from 'data/user/user.service';
 import Spinner from 'components/Spinner/Spinner';
 import { Movie } from 'data/movie/movie.type';
+import Button from 'components/Button/Button';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
 
@@ -49,9 +50,7 @@ export default function Home() {
       {state.value === 'failure' && (
         <div className={styles.Feedback}>
           <p>Something went wrong, please try again</p>
-          <button type="button" onClick={() => send('RETRY')}>
-            RETRY
-          </button>
+          <Button onClick={() => send('RETRY')}>RETRY</Button>
         </div>
       )}
       {state.value === 'loading' && (
