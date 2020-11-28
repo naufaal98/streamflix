@@ -1,0 +1,32 @@
+.MovieSection {
+  background-color: #fff;
+  display: flex;
+  position: relative;
+  border-radius: 4px;
+}
+
+.PosterSection {
+  .Poster {
+    border-radius: 4px;
+    margin: 20px;
+  }
+}
+
+.Description {
+  padding: var(--spacing-8);
+}
+
+.MovieTitle {
+  margin: 0;
+  margin-bottom: var(--spacing-5);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.Info {
+  display: flex;
+  gap: 20px;
+  margin-bottom: var(--spacing-5);
+  align-items: center;
+}

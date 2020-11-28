@@ -1,0 +1,12 @@
+.Rating {
+  display: flex;
+  align-items: center;
+
+  .RatingIcon {
+    color: orange;
+    font-size: var(--fontSize-2);
+  }
+  .RatingScore {
+    margin-left: 10px;
+  }
+}
