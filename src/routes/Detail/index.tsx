@@ -9,10 +9,11 @@ import Rating from 'components/Rating/Rating';
 import formatToCurrency from 'utils/formatToCurrency';
 import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
+import { Movie } from 'data/movie/movie.type';
+import MovieCard from 'components/MovieCard/MovieCard';
+import { User } from 'data/user/user.type';
 import detailMachine, { DetailContext } from './detailMachine';
 import styles from './index.module.scss';
-import SimilarMovies from './components/SimilarMovies/SimilarMovies';
-import RecommendedMovies from './components/RecommendedMovies/RecommendedMovies';
 
 function convertTime(num: number) {
   const hours = Math.floor(num / 60);
@@ -20,8 +21,36 @@ function convertTime(num: number) {
   return `${hours}h ${minutes}min`;
 }
 
+function MovieList({
+  userData,
+  movies,
+  listTitle,
+}: {
+  userData: User;
+  movies: Movie[];
+  listTitle: string;
+}) {
+  return (
+    <div className={styles.SimilarMovies}>
+      <h3>{listTitle}</h3>
+      <div className={styles.MoviesGrid}>
+        {movies.slice(0, 6).map((movie: Movie) => (
+          <div key={movie.id}>
+            <MovieCard
+              movie={movie}
+              isPurchased={userData.purchased_movies.includes(movie.id)}
+              key={movie.id}
+            />
+          </div>
+        ))}
+      </div>
+      {movies.length === 0 && <p>Sorry, we couldn&apos;t find anything :(</p>}
+    </div>
+  );
+}
+
 export default function Detail() {
-  const { syncUserContext } = React.useContext(UserContext);
+  const { userData, syncUserContext } = React.useContext(UserContext);
   const { id } = useParams<{ id: string }>();
   const [state, send] = useMachine(
     detailMachine.withConfig(
@@ -38,6 +67,8 @@ export default function Detail() {
         movie: null,
         // initial context from localStorage
         user: UserService.getLocalData(),
+        similarMovies: [],
+        recommendedMovies: [],
       },
     ),
   );
@@ -99,10 +130,9 @@ export default function Detail() {
                     {nestState.matches('loaded.purchasing') && 'Purchasing...'}
 
                     {!nestState.matches('loaded.purchasing') && (
-                      <>{formatToCurrency(movie!.price)}&nbsp;Buy</>
+                      <>{formatToCurrency(movie!.price)}&nbsp;Purchase</>
                     )}
                   </Button>
-                  <Button kind="secondary">Add to Whistlist</Button>
                 </div>
               )}
 
@@ -135,8 +165,17 @@ export default function Detail() {
             </div>
           </div>
 
-          <SimilarMovies id={movie!.id} />
-          <RecommendedMovies id={movie!.id} />
+          <MovieList
+            listTitle="Similar Movies"
+            movies={state.context.similarMovies}
+            userData={userData}
+          />
+
+          <MovieList
+            listTitle="Recommended Movies"
+            movies={state.context.recommendedMovies}
+            userData={userData}
+          />
         </>
       )}
     </div>

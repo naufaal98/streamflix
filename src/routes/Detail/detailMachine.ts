@@ -1,6 +1,6 @@
 import { Machine, assign } from 'xstate';
 import MovieService from 'data/movie/movie.service';
-import { MovieDetail } from 'data/movie/movie.type';
+import { Movie, MovieDetail } from 'data/movie/movie.type';
 import { User } from 'data/user/user.type';
 
 interface DetailStateSchema {
@@ -23,6 +23,8 @@ export interface DetailContext {
   id: number | null;
   user: User;
   movie: MovieDetail | null;
+  similarMovies: Movie[];
+  recommendedMovies: Movie[];
 }
 
 type DetailEvent = { type: 'FETCH'; id: number } | { type: 'PURCHASE' } | { type: 'RETRY' };
@@ -38,6 +40,8 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
         purchased_movies: [],
       },
       movie: null,
+      similarMovies: [],
+      recommendedMovies: [],
     },
     states: {
       idle: {},
@@ -115,11 +119,18 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
         }),
       }),
       storeMovieData: assign({
-        movie: (_ctx, event: any) => event.data,
+        movie: (_ctx, event: any) => event.data[0],
+        similarMovies: (_ctx, event: any) => event.data[1].results,
+        recommendedMovies: (_ctx, event: any) => event.data[2].results,
       }),
     },
     services: {
-      getMovieDetail: (ctx) => MovieService.getDetail(ctx.id!),
+      getMovieDetail: (ctx) =>
+        Promise.all([
+          MovieService.getDetail(ctx.id!),
+          MovieService.getSimilar(ctx.id!, { page: 1 }),
+          MovieService.getRecommended(ctx.id!, { page: 1 }),
+        ]),
       purchaseMovie: () =>
         new Promise((resolve) => {
           setTimeout(resolve, 500);
