@@ -2,16 +2,16 @@ import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
 import MovieCard from 'components/MovieCard/MovieCard';
-import UserService from 'data/user/user.service';
 import Spinner from 'components/Spinner/Spinner';
 import { Movie } from 'data/movie/movie.type';
 import Button from 'components/Button/Button';
+import { UserContext } from 'context/UserContext';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
 
 export default function Home() {
   const [state, send] = useMachine(homeMachine);
-  const [userData] = React.useState(UserService.getLocalData());
+  const { userData } = React.useContext(UserContext);
   const history = useHistory();
 
   const infiniteScroll = () => {
@@ -41,7 +41,9 @@ export default function Home() {
           <div key={movie.id}>
             <MovieCard
               movie={movie}
-              isPurchased={userData.purchased_movies.includes(movie.id)}
+              isPurchased={
+                !!userData.purchased_movies.find((purchasedMovie) => movie.id === purchasedMovie.id)
+              }
               key={movie.id}
             />
           </div>

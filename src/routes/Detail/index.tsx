@@ -38,7 +38,9 @@ function MovieList({
           <div key={movie.id}>
             <MovieCard
               movie={movie}
-              isPurchased={userData.purchased_movies.includes(movie.id)}
+              isPurchased={
+                !!userData.purchased_movies.find((purchasedMovie) => movie.id === purchasedMovie.id)
+              }
               key={movie.id}
             />
           </div>

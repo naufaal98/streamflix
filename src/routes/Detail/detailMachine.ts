@@ -108,14 +108,15 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
   },
   {
     guards: {
-      isMovieAlreadyPurchased: (ctx): boolean => ctx.user.purchased_movies.includes(ctx.movie!.id),
+      isMovieAlreadyPurchased: (ctx): boolean =>
+        !!ctx.user.purchased_movies.find((movie) => movie.id === ctx.movie!.id),
       isBalanceInsufficient: (ctx): boolean => ctx.user.balance < ctx.movie!.price,
     },
     actions: {
       assignUserContext: assign({
         user: (context, _event) => ({
           balance: context.user.balance - context.movie!.price,
-          purchased_movies: [...context.user.purchased_movies, context.movie!.id],
+          purchased_movies: [...context.user.purchased_movies, context.movie!],
         }),
       }),
       storeMovieData: assign({
