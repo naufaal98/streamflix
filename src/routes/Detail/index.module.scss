@@ -8,15 +8,21 @@
 
 .MovieSection {
   background-color: #fff;
-  display: flex;
-  position: relative;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 850px) {
+    flex-direction: row;
+  }
 }
 
 .PosterSection {
+  padding: 20px;
   .Poster {
     border-radius: 4px;
-    margin: 20px;
+    display: block;
+    margin: auto;
   }
 }
 
@@ -39,8 +45,13 @@
 .Info {
   margin-bottom: var(--spacing-5);
   display: flex;
-  align-items: center;
-  gap: var(--spacing-8);
+  flex-direction: column;
+  gap: var(--spacing-3);
+
+  @media (min-width: 950px) {
+    flex-direction: row;
+    gap: var(--spacing-3);
+  }
 }
 
 .InfoFirstRow {

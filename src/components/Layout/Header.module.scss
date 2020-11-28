@@ -1,7 +1,12 @@
 .Header {
   color: var(--color-primary);
   display: flex;
+  flex-direction: column;
   align-items: center;
+
+  @media (min-width: 650px) {
+    flex-direction: row;
+  }
 }
 
 .LogoWrapper {
@@ -24,13 +29,16 @@
 }
 
 .RightSide {
-  margin-left: auto;
   display: flex;
   align-items: center;
+  margin-top: 30px;
+  @media (min-width: 650px) {
+    margin-left: auto;
+  }
 }
 
 .Navigation {
-  margin-right: 30px;
+  margin-right: 20px;
 
   a {
     text-decoration: none;
@@ -40,9 +48,8 @@
 
 .Balance {
   color: var(--color-heading);
-  border: 1.5px solid var(--color-heading);
+  border-left: 1.5px solid var(--color-text-light);
   padding: 10px;
-  border-radius: 4px;
   span {
     color: var(--color-primary);
     font-weight: var(--fontWeight-bold);
