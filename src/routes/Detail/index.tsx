@@ -8,6 +8,7 @@ import PurchasedIcon from 'components/Icon/PurchasedIcon';
 import Rating from 'components/Rating/Rating';
 import formatToCurrency from 'utils/formatToCurrency';
 import Button from 'components/Button/Button';
+import Spinner from 'components/Spinner/Spinner';
 import detailMachine, { DetailContext } from './detailMachine';
 import styles from './index.module.scss';
 
@@ -42,8 +43,17 @@ export default function Detail() {
 
   return (
     <div className={styles.Detail}>
-      {state.value === 'loading' && <p>Loading...</p>}
-      {state.value === 'failure' && <p>Failure</p>}
+      {state.value === 'loading' && (
+        <div className={styles.Feedback}>
+          <Spinner />
+        </div>
+      )}
+      {state.value === 'failure' && (
+        <div className={styles.Feedback}>
+          <p>Something went wrong, please try again</p>
+          <Button onClick={() => send('RETRY')}>RETRY</Button>
+        </div>
+      )}
       {state.matches('loaded') && (
         <div className={styles.MovieSection}>
           <div className={styles.PosterSection}>
@@ -54,10 +64,10 @@ export default function Detail() {
             />
           </div>
           <div className={styles.Description}>
-            <h1 className={styles.MovieTitle}>
+            <h2 className={styles.MovieTitle}>
               <span>{movie!.title}</span>
               {state.matches('loaded.purchased') && <PurchasedIcon />}
-            </h1>
+            </h2>
             <div className={styles.Info}>
               <div className={styles.InfoFirstRow}>
                 <Rating score={movie!.rating} />
@@ -65,7 +75,9 @@ export default function Detail() {
               </div>
               <div className={styles.InfoSecondRow}>
                 {movie!.genres.map((genre) => (
-                  <span className={styles.Genre}>{genre.name} </span>
+                  <span className={styles.Genre} key={genre.id}>
+                    {genre.name}{' '}
+                  </span>
                 ))}
               </div>
             </div>
@@ -77,6 +89,16 @@ export default function Detail() {
               <Button kind="secondary">Add to Whistlist</Button>
             </div>
             <p className={styles.Overview}>{movie!.overview}</p>
+            <div className={styles.CastSection}>
+              <h3 className={styles.CastTitle}>Cast</h3>
+              <ul className={styles.CastList}>
+                {movie!.casts.map((cast) => (
+                  <li key={cast.id} className={styles.Cast}>
+                    {cast.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       )}

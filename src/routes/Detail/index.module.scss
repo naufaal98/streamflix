@@ -1,3 +1,11 @@
+.Feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .MovieSection {
   background-color: #fff;
   display: flex;
@@ -58,7 +66,7 @@
       height: 3px;
       right: 0;
       top: 50%;
-      background-color: #ccc;
+      background-color: var(--color-text-light);
     }
   }
 }
@@ -71,7 +79,33 @@
 }
 
 .Price {
-  // font-weight: var(--fontWeight-bold);
   margin: 0;
   margin-right: 5px;
+}
+
+.CastTitle {
+  font-size: var(--fontSize-3);
+}
+
+.CastList {
+  list-style-type: none;
+
+  .Cast {
+    display: inline-block;
+    position: relative;
+    padding-right: 22px;
+    margin-bottom: 5px;
+
+    &:not(:last-child) {
+      &:after {
+        content: '';
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        right: 9px;
+        top: 50%;
+        background-color: var(--color-text-light);
+      }
+    }
+  }
 }
