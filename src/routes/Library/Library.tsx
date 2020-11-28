@@ -2,6 +2,7 @@ import MovieCard from 'components/MovieCard/MovieCard';
 import { UserContext } from 'context/UserContext';
 import { Movie } from 'data/movie/movie.type';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Library.module.scss';
 
 export default function Library() {
@@ -24,7 +25,11 @@ export default function Library() {
           </div>
         ))}
       </div>
-      {movies.length === 0 && <p>Sorry, we couldn&apos;t find anything :(</p>}
+      {movies.length === 0 && (
+        <p>
+          You haven&apos;t made any purchases yet. <Link to="/">Start Explore movies</Link>
+        </p>
+      )}
     </>
   );
 }
