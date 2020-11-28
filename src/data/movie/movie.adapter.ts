@@ -1,4 +1,4 @@
-import { Movie, MovieList, Cast, MovieDetail } from 'data/movie/movie.type';
+import { Movie, MovieList, Cast, MovieDetail, Genre } from 'data/movie/movie.type';
 import calculatePriceByRating from 'utils/calculatePriceByRating';
 import convertToSlug from 'utils/convertToSlug';
 
@@ -31,10 +31,18 @@ export function castAdapter(cast: any): Cast {
   };
 }
 
+export function genreAdapter(genre: any): Genre {
+  return {
+    id: genre.id,
+    name: genre.name,
+  };
+}
+
 export function movieDetailAdapter(movie: any, casts: any): MovieDetail {
   return {
     ...movieAdapter(movie),
     duration: movie.runtime,
+    genres: movie.genres.map((genre: any) => genreAdapter(genre)),
     casts: casts.map((cast: any) => castAdapter(cast)),
   };
 }
