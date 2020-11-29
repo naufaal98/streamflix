@@ -3,13 +3,11 @@ import homeMachine from './homeMachine';
 
 const mockInvokeGetMovieList = (status: 'success' | 'error') =>
   new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (status === 'success') {
-        resolve({ success: true });
-      } else {
-        reject();
-      }
-    }, 50);
+    if (status === 'success') {
+      resolve({ success: true });
+    } else {
+      reject();
+    }
   });
 
 it('should reach "loaded" when data fetched successfully ', (done) => {
