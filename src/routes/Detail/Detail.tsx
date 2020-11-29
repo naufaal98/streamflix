@@ -11,7 +11,7 @@ import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
 import detailMachine, { DetailContext } from './detailMachine';
 import MovieList from './components/MovieList/MovieList';
-import styles from './_Detail.module.scss';
+import styles from './Detail.module.scss';
 
 function convertTime(num: number) {
   const hours = Math.floor(num / 60);

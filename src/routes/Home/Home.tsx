@@ -13,7 +13,7 @@ import MoviesGrid from 'components/MoviesGrid/MoviesGrid';
 import isMoviePurchased from 'utils/isMoviePurchased';
 import homeMachine from './homeMachine';
 
-import styles from './_Home.module.scss';
+import styles from './Home.module.scss';
 
 export default function Home() {
   const { userData } = React.useContext(UserContext);
