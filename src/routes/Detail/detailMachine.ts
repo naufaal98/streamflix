@@ -76,21 +76,6 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
           },
           purchased: {},
         },
-        on: {
-          PURCHASE: [
-            {
-              cond: 'isMoviePurchased',
-              target: 'loaded.purchased',
-            },
-            {
-              cond: 'isBalanceInsufficient',
-              target: 'loaded.insufficientBalance',
-            },
-            {
-              target: 'loaded.purchasing',
-            },
-          ],
-        },
       },
       failure: {
         on: {
@@ -105,6 +90,19 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
           id: (_ctx, event) => event.id,
         }),
       },
+      PURCHASE: [
+        {
+          cond: 'isMoviePurchased',
+          target: 'loaded.purchased',
+        },
+        {
+          cond: 'isBalanceInsufficient',
+          target: 'loaded.insufficientBalance',
+        },
+        {
+          target: 'loaded.purchasing',
+        },
+      ],
     },
   },
   {
