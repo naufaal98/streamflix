@@ -1,7 +1,6 @@
-import Button from 'components/Button/Button';
 import { UserContext } from 'context/UserContext';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import formatToCurrency from 'utils/formatToCurrency';
 import styles from './Header.module.scss';
 
@@ -10,13 +9,15 @@ export default function Header() {
   return (
     <header className={styles.Header}>
       <h1 className={styles.LogoWrapper}>
-        <Link to="/" className={styles.Logo}>
+        <NavLink to="/" className={styles.Logo}>
           StreamFlix
-        </Link>
+        </NavLink>
       </h1>
       <div className={styles.RightSide}>
         <nav className={styles.Navigation}>
-          <Link to="/library">Library</Link>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/library">Library</NavLink>
+          <NavLink to="/library">Top Up</NavLink>
         </nav>
         <div className={styles.Balance}>
           Balance: <span>{formatToCurrency(userData.balance)}</span>

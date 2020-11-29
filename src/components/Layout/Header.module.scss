@@ -30,28 +30,38 @@
 
 .RightSide {
   display: flex;
+  flex-direction: column-reverse;
   align-items: center;
   margin-top: 30px;
   @media (min-width: 650px) {
+    flex-direction: row;
     margin-top: 0;
     margin-left: auto;
   }
 }
 
 .Navigation {
-  margin-right: 20px;
+  display: flex;
+  gap: 15px;
+
+  @media (min-width: 650px) {
+    margin-right: 20px;
+  }
 
   a {
     text-decoration: none;
     font-weight: var(--fontWeight-bold);
+    text-transform: uppercase;
   }
 }
 
 .Balance {
   color: var(--color-heading);
-  border-left: 1.5px solid var(--color-text-light);
   padding: 10px;
   span {
     font-weight: var(--fontWeight-bold);
+  }
+  @media (min-width: 650px) {
+    border-left: 1.5px solid var(--color-text-light);
   }
 }
