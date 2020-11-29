@@ -17,7 +17,7 @@ export default function Header() {
         <nav className={styles.Navigation}>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/library">Library</NavLink>
-          <NavLink to="/library">Top Up</NavLink>
+          <NavLink to="/top-up">Top Up</NavLink>
         </nav>
         <div className={styles.Balance}>
           Balance: <span>{formatToCurrency(userData.balance)}</span>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import UserService from 'data/user/user.service';
 import { UserContext } from 'context/UserContext';
@@ -114,7 +114,8 @@ export default function Detail() {
                 )}
                 {state.matches('loaded.insufficientBalance') && (
                   <p className={styles.InsufficientBalance}>
-                    Sorry, your balance is not enough to purchase this movie.
+                    Sorry, your balance is not enough to purchase this movie. &nbsp;
+                    <Link to="top-up">Top up Here</Link>.
                   </p>
                 )}
               </div>
