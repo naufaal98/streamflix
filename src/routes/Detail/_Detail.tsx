@@ -10,8 +10,8 @@ import formatToCurrency from 'utils/formatToCurrency';
 import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
 import detailMachine, { DetailContext } from './detailMachine';
-import styles from './index.module.scss';
 import MovieList from './components/MovieList/MovieList';
+import styles from './_Detail.module.scss';
 
 function convertTime(num: number) {
   const hours = Math.floor(num / 60);

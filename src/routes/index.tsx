@@ -2,8 +2,8 @@ import Spinner from 'components/Spinner/Spinner';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-const Home = React.lazy(() => import('./Home'));
-const Detail = React.lazy(() => import('./Detail'));
+const Home = React.lazy(() => import('./Home/_Home'));
+const Detail = React.lazy(() => import('./Detail/_Detail'));
 const Library = React.lazy(() => import('./Library/Library'));
 const TopUp = React.lazy(() => import('./TopUp/TopUp'));
 
