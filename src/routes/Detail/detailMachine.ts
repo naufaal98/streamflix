@@ -1,6 +1,5 @@
 import { Machine, assign } from 'xstate';
 import MovieService from 'data/movie/movie.service';
-import UserService from 'data/user/user.service';
 import { Movie, MovieDetail } from 'data/movie/movie.type';
 import { User } from 'data/user/user.type';
 import isMoviePurchased from 'utils/isMoviePurchased';
