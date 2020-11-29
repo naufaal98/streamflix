@@ -13,7 +13,7 @@ export interface HomeStateSchema {
 export interface HomeContext {
   page: number;
   pageFetched: number[];
-  movieList: Movie[];
+  movies: Movie[];
 }
 
 export type HomeEvent = { type: 'RETRY' } | { type: 'FETCH'; page: number };
@@ -25,7 +25,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
     context: {
       page: 1,
       pageFetched: [],
-      movieList: [],
+      movies: [],
     },
     states: {
       loading: {
@@ -35,7 +35,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
           onDone: {
             target: 'loaded',
             actions: assign<HomeContext, DoneInvokeEvent<MovieList>>({
-              movieList: (ctx: HomeContext, event) => ctx.movieList.concat(event.data.results),
+              movies: (ctx: HomeContext, event) => ctx.movies.concat(event.data.results),
               pageFetched: (ctx) => ctx.pageFetched.concat(ctx.page),
             }),
           },
