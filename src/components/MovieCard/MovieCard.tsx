@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 
 import { Movie } from 'data/movie/movie.type';
 import formatToCurrency from 'utils/formatToCurrency';
@@ -11,13 +12,17 @@ const MovieCard = ({ movie, isPurchased }: { movie: Movie; isPurchased: boolean 
   const detailUrl = `/${movie.id}-${movie.slug}`;
   return (
     <div key={movie.id} className={styles.MovieCard}>
-      <Link to={detailUrl}>
-        <img
-          className={styles.Poster}
-          src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
-          alt={movie.title}
-        />
-      </Link>
+      <LazyLoad once offset={100}>
+        <Link to={detailUrl}>
+          <img
+            className={styles.Poster}
+            src={`https://image.tmdb.org/t/p/w400/${movie.poster_path}`}
+            alt={movie.title}
+            width="640"
+            height="360"
+          />
+        </Link>
+      </LazyLoad>
       <div className={styles.Description}>
         <Link to={detailUrl}>
           <h2 className={styles.Title}>{movie.title}</h2>
