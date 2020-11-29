@@ -3,6 +3,7 @@ import MovieCard from 'components/MovieCard/MovieCard';
 import { Movie } from 'data/movie/movie.type';
 import { User } from 'data/user/user.type';
 
+import isMoviePurchased from 'utils/isMoviePurchased';
 import styles from './MovieList.module.scss';
 
 export default function MovieList({
@@ -22,9 +23,10 @@ export default function MovieList({
           <div key={movie.id}>
             <MovieCard
               movie={movie}
-              isPurchased={
-                !!userData.purchased_movies.find((purchasedMovie) => movie.id === purchasedMovie.id)
-              }
+              isPurchased={isMoviePurchased({
+                purchased_movies: userData.purchased_movies,
+                id: movie.id,
+              })}
               key={movie.id}
             />
           </div>
