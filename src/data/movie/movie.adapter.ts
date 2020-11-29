@@ -8,9 +8,7 @@ export function movieAdapter(movie: any): Movie {
     title: movie.title,
     rating: movie.vote_average,
     overview: movie.overview,
-    release_date: movie.release_date,
     poster_path: movie.poster_path,
-    backdrop_path: movie.backdrop_path,
     slug: convertToSlug(movie.title),
     price: calculatePriceByRating(movie.vote_average),
   };

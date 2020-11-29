@@ -4,6 +4,7 @@ import { UserContext } from 'context/UserContext';
 import { Movie } from 'data/movie/movie.type';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import isMoviePurchased from 'utils/isMoviePurchased';
 
 export default function Library() {
   const { userData } = React.useContext(UserContext);
@@ -17,9 +18,10 @@ export default function Library() {
           <div key={movie.id}>
             <MovieCard
               movie={movie}
-              isPurchased={
-                !!userData.purchased_movies.find((purchasedMovie) => movie.id === purchasedMovie.id)
-              }
+              isPurchased={isMoviePurchased({
+                purchased_movies: userData.purchased_movies,
+                id: movie.id,
+              })}
               key={movie.id}
             />
           </div>

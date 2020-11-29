@@ -1,7 +1,9 @@
 import { Machine, assign } from 'xstate';
 import MovieService from 'data/movie/movie.service';
+import UserService from 'data/user/user.service';
 import { Movie, MovieDetail } from 'data/movie/movie.type';
 import { User } from 'data/user/user.type';
+import isMoviePurchased from 'utils/isMoviePurchased';
 
 interface DetailStateSchema {
   states: {
@@ -60,7 +62,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
         initial: 'idle',
         states: {
           idle: {
-            always: [{ target: 'purchased', cond: 'isMovieAlreadyPurchased' }],
+            always: [{ target: 'purchased', cond: 'isMoviePurchased' }],
           },
           insufficientBalance: {},
           purchasing: {
@@ -69,7 +71,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
               src: 'purchaseMovie',
               onDone: {
                 target: 'purchased',
-                actions: ['assignUserContext', 'persist'],
+                actions: ['updateUserPurchasedData', 'persist'],
               },
             },
           },
@@ -78,7 +80,7 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
         on: {
           PURCHASE: [
             {
-              cond: 'isMovieAlreadyPurchased',
+              cond: 'isMoviePurchased',
               target: 'loaded.purchased',
             },
             {
@@ -108,15 +110,26 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
   },
   {
     guards: {
-      isMovieAlreadyPurchased: (ctx): boolean =>
-        !!ctx.user.purchased_movies.find((movie) => movie.id === ctx.movie!.id),
+      isMoviePurchased: (ctx): boolean =>
+        isMoviePurchased({ purchased_movies: ctx.user.purchased_movies, id: ctx.movie!.id }),
       isBalanceInsufficient: (ctx): boolean => ctx.user.balance < ctx.movie!.price,
     },
     actions: {
-      assignUserContext: assign({
+      updateUserPurchasedData: assign({
         user: (context, _event) => ({
           balance: context.user.balance - context.movie!.price,
-          purchased_movies: [...context.user.purchased_movies, context.movie!],
+          purchased_movies: [
+            ...context.user.purchased_movies,
+            {
+              id: context.movie!.id,
+              title: context.movie!.title,
+              rating: context.movie!.rating,
+              overview: context.movie!.overview,
+              poster_path: context.movie!.poster_path,
+              slug: context.movie!.slug,
+              price: context.movie!.price,
+            },
+          ],
         }),
       }),
       storeMovieData: assign({

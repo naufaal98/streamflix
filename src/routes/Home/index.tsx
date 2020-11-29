@@ -7,6 +7,7 @@ import { Movie } from 'data/movie/movie.type';
 import Button from 'components/Button/Button';
 import { UserContext } from 'context/UserContext';
 import MoviesGrid from 'components/MoviesGrid/MoviesGrid';
+import isMoviePurchased from 'utils/isMoviePurchased';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
 
@@ -42,9 +43,10 @@ export default function Home() {
           <div key={movie.id}>
             <MovieCard
               movie={movie}
-              isPurchased={
-                !!userData.purchased_movies.find((purchasedMovie) => movie.id === purchasedMovie.id)
-              }
+              isPurchased={isMoviePurchased({
+                purchased_movies: userData.purchased_movies,
+                id: movie.id,
+              })}
               key={movie.id}
             />
           </div>

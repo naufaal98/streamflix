@@ -20,8 +20,9 @@ function convertTime(num: number) {
 }
 
 export default function Detail() {
-  const { userData, syncUserContext } = React.useContext(UserContext);
+  const { syncUserContext } = React.useContext(UserContext);
   const { id } = useParams<{ id: string }>();
+  const movieId: number = parseInt(id, 10);
   const [state, send] = useMachine(
     detailMachine.withConfig(
       {
@@ -35,7 +36,6 @@ export default function Detail() {
       {
         id: null,
         movie: null,
-        // initial context from localStorage
         user: UserService.getLocalData(),
         similarMovies: [],
         recommendedMovies: [],
@@ -45,7 +45,7 @@ export default function Detail() {
   const { movie } = state.context;
 
   React.useEffect(() => {
-    send({ type: 'FETCH', id: (id as unknown) as number });
+    send({ type: 'FETCH', id: movieId });
   }, [id]);
 
   const nestState = state; // To fix nested state.matches issue
@@ -138,13 +138,12 @@ export default function Detail() {
           <MovieList
             listTitle="Similar Movies"
             movies={state.context.similarMovies}
-            userData={userData}
+            userData={state.context.user}
           />
-
           <MovieList
             listTitle="Recommended Movies"
             movies={state.context.recommendedMovies}
-            userData={userData}
+            userData={state.context.user}
           />
         </>
       )}

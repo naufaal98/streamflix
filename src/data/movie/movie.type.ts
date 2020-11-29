@@ -3,9 +3,7 @@ export interface Movie {
   title: string;
   rating: number;
   overview: string;
-  release_date: string;
   poster_path: string;
-  backdrop_path: string;
   slug: string;
   price: number;
 }
