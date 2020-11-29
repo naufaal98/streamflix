@@ -37,13 +37,4 @@ const getLocalData = () => {
   }
 };
 
-const isMoviePurchased = (id: number) => {
-  try {
-    const userData = getLocalData();
-    return !!userData!.purchased_movies.find((movie: Movie) => movie.id === id);
-  } catch (err) {
-    return false;
-  }
-};
-
-export default { setLocalData, getLocalData, isMoviePurchased };
+export default { setLocalData, getLocalData };
