@@ -1,3 +1,4 @@
+import Button from 'components/Button/Button';
 import { UserContext } from 'context/UserContext';
 import React from 'react';
 import { Link } from 'react-router-dom';

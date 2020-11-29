@@ -6,6 +6,7 @@ import Spinner from 'components/Spinner/Spinner';
 import { Movie } from 'data/movie/movie.type';
 import Button from 'components/Button/Button';
 import { UserContext } from 'context/UserContext';
+import MoviesGrid from 'components/MoviesGrid/MoviesGrid';
 import homeMachine from './homeMachine';
 import styles from './index.module.scss';
 
@@ -36,7 +37,7 @@ export default function Home() {
   return (
     <div className={styles.Home}>
       <h2 className={styles.SectionTitle}>Currently Playing in Indoesia </h2>
-      <div className={styles.MoviesGrid}>
+      <MoviesGrid>
         {state.context.movieList.map((movie: Movie) => (
           <div key={movie.id}>
             <MovieCard
@@ -48,7 +49,7 @@ export default function Home() {
             />
           </div>
         ))}
-      </div>
+      </MoviesGrid>
       {state.value === 'failure' && (
         <div className={styles.Feedback}>
           <p>Something went wrong, please try again</p>

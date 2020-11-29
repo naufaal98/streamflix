@@ -9,46 +9,14 @@ import Rating from 'components/Rating/Rating';
 import formatToCurrency from 'utils/formatToCurrency';
 import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
-import { Movie } from 'data/movie/movie.type';
-import MovieCard from 'components/MovieCard/MovieCard';
-import { User } from 'data/user/user.type';
 import detailMachine, { DetailContext } from './detailMachine';
 import styles from './index.module.scss';
+import MovieList from './components/MovieList/MovieList';
 
 function convertTime(num: number) {
   const hours = Math.floor(num / 60);
   const minutes = num % 60;
   return `${hours}h ${minutes}min`;
-}
-
-function MovieList({
-  userData,
-  movies,
-  listTitle,
-}: {
-  userData: User;
-  movies: Movie[];
-  listTitle: string;
-}) {
-  return (
-    <>
-      <h2>{listTitle}</h2>
-      <div className={styles.MoviesGrid}>
-        {movies.slice(0, 6).map((movie: Movie) => (
-          <div key={movie.id}>
-            <MovieCard
-              movie={movie}
-              isPurchased={
-                !!userData.purchased_movies.find((purchasedMovie) => movie.id === purchasedMovie.id)
-              }
-              key={movie.id}
-            />
-          </div>
-        ))}
-      </div>
-      {movies.length === 0 && <p>Sorry, we couldn&apos;t find anything :(</p>}
-    </>
-  );
 }
 
 export default function Detail() {
