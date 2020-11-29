@@ -28,7 +28,7 @@ export default function Library() {
         ))}
       </MoviesGrid>
       {movies.length === 0 && (
-        <p>
+        <p role="status">
           You haven&apos;t made any purchases yet. <Link to="/">Start Explore movies</Link>
         </p>
       )}

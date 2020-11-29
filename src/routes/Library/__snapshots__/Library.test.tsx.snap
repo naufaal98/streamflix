@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders feedback when purchased movies are empty 1`] = `
+<p
+  role="status"
+>
+  You haven't made any purchases yet. 
+  <a
+    href="/"
+  >
+    Start Explore movies
+  </a>
+</p>
+`;
