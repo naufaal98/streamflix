@@ -59,16 +59,14 @@ export default function Home() {
       <h2 className={styles.SectionTitle}>Currently Playing in Indoesia </h2>
       <MoviesGrid>
         {state.context.movieList.map((movie: Movie) => (
-          <div key={movie.id}>
-            <MovieCard
-              movie={movie}
-              isPurchased={isMoviePurchased({
-                purchased_movies: userData.purchased_movies,
-                id: movie.id,
-              })}
-              key={movie.id}
-            />
-          </div>
+          <MovieCard
+            movie={movie}
+            isPurchased={isMoviePurchased({
+              purchased_movies: userData.purchased_movies,
+              id: movie.id,
+            })}
+            key={movie.id}
+          />
         ))}
       </MoviesGrid>
 
