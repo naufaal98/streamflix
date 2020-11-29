@@ -8,7 +8,7 @@ import styles from './TopUp.module.scss';
 
 export default function TopUp() {
   const { userData, syncUserContext } = React.useContext(UserContext);
-  const [topUpAmount, setTopUpAmount] = React.useState();
+  const [topUpAmount, setTopUpAmount] = React.useState('');
 
   const handleTopUp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +18,7 @@ export default function TopUp() {
       ...userData,
       balance: userData.balance + amount,
     });
+    setTopUpAmount('');
     syncUserContext();
   };
 
