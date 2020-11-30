@@ -7,11 +7,13 @@ export interface HomeStateSchema {
     loading: {};
     loaded: {};
     failure: {};
+    lastPage: {};
   };
 }
 
 export interface HomeContext {
   page: number;
+  total_pages: number;
   pageFetched: number[];
   movies: Movie[];
 }
@@ -24,6 +26,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
     initial: 'loading',
     context: {
       page: 1,
+      total_pages: 1,
       pageFetched: [],
       movies: [],
     },
@@ -36,6 +39,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
             target: 'loaded',
             actions: assign<HomeContext, DoneInvokeEvent<MovieList>>({
               movies: (ctx: HomeContext, event) => ctx.movies.concat(event.data.results),
+              total_pages: (_, event) => event.data.total_pages,
               pageFetched: (ctx) => ctx.pageFetched.concat(ctx.page),
             }),
           },
@@ -44,15 +48,22 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
       },
       loaded: {
         on: {
-          FETCH: {
-            cond: (ctx, event) => !ctx.pageFetched.includes(event.page),
-            target: 'loading',
-            actions: assign({
-              page: (_ctx, event) => event.page,
-            }),
-          },
+          FETCH: [
+            {
+              target: 'lastPage',
+              cond: (ctx, event) => event.page > ctx.total_pages!,
+            },
+            {
+              cond: (ctx, event) => !ctx.pageFetched.includes(event.page),
+              target: 'loading',
+              actions: assign({
+                page: (_ctx, event) => event.page,
+              }),
+            },
+          ],
         },
       },
+      lastPage: {},
       failure: {
         on: {
           RETRY: 'loading',
@@ -62,7 +73,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
   },
   {
     services: {
-      invokeGetMovieList: (ctx) => MovieService.getNowPlaying({ page: ctx.page }),
+      invokeGetMovieList: (ctx) => MovieService.getNowPlaying({ page: ctx.page, region: 'ID' }),
     },
   },
 );

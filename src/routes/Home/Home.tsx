@@ -1,16 +1,14 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
-import InfiniteScroll, { contextType } from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import { Movie } from 'data/movie/movie.type';
 import { UserContext } from 'context/UserContext';
-
 import MovieCard from 'components/MovieCard/MovieCard';
 import Spinner from 'components/Spinner/Spinner';
 import Button from 'components/Button/Button';
 import MoviesGrid from 'components/MoviesGrid/MoviesGrid';
-
 import isMoviePurchased from 'utils/isMoviePurchased';
 import homeMachine from './homeMachine';
 
@@ -28,12 +26,7 @@ export default function Home() {
   });
 
   service.onTransition((serviceState) => {
-    try {
-      sessionStorage.setItem(homeStateSession, JSON.stringify(serviceState));
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Unable to save to sessionStorage');
-    }
+    sessionStorage.setItem(homeStateSession, JSON.stringify(serviceState));
   });
 
   React.useEffect(() => {
@@ -45,7 +38,7 @@ export default function Home() {
       <h2 className={styles.SectionTitle}>Now Playing </h2>
       <InfiniteScroll
         pageStart={state.context.page}
-        hasMore
+        hasMore={state.value !== 'lastPage'}
         loadMore={() => send({ type: 'FETCH', page: state.context.page + 1 })}
       >
         <MoviesGrid>
