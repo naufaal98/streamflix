@@ -36,7 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "test:nowatch": "CI=true react-scripts-ts test --env=jsdom"
   },
   "eslintConfig": {
     "extends": [
@@ -57,7 +58,6 @@
     ]
   },
   "devDependencies": {
-    "@types/chai": "^4.2.14",
     "@types/react-lazyload": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
@@ -75,7 +75,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && CI=true react-scripts test --env=jsdom"
     }
   },
   "lint-staged": {
