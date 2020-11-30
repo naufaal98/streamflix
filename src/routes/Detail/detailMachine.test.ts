@@ -96,9 +96,8 @@ it('should reach "loaded.insufficientBalance" when purchasing with insufficient 
         done();
       }
     })
-    .start();
+    .start('loaded');
 
-  detailService.send({ type: 'FETCH', id: movie.id });
   detailService.send('PURCHASE');
 });
 
@@ -121,8 +120,7 @@ it('should reach "loaded.purchased" when purchasing with sufficient balance', (d
         done();
       }
     })
-    .start();
+    .start('loaded');
 
-  detailService.send({ type: 'FETCH', id: movie.id });
   detailService.send('PURCHASE');
 });
