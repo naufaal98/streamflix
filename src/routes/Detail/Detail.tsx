@@ -126,8 +126,8 @@ export default function Detail() {
 
                 {state.matches('loaded.insufficientBalance') && (
                   <p className={styles.InsufficientBalance}>
-                    Sorry, your balance is not enough to purchase this movie. &nbsp;
-                    <Link to="top-up">Top up Here</Link>.
+                    Sorry, your balance is not enough to purchase this movie. Top up&nbsp;
+                    <Link to="top-up">here</Link>.
                   </p>
                 )}
               </div>
