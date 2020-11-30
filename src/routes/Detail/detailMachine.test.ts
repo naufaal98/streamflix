@@ -101,7 +101,7 @@ it('should reach "loaded.insufficientBalance" when purchasing with insufficient 
   detailService.send('PURCHASE');
 });
 
-it('should reach "loaded.purchased" when purchasing with sufficient balance', (done) => {
+it('should reach "loaded.purchaseSuccess" when purchasing with sufficient balance', (done) => {
   const extendMockDetailMachine = mockDetailMachine.withContext({
     ...initialContext,
     user: {
@@ -116,7 +116,7 @@ it('should reach "loaded.purchased" when purchasing with sufficient balance', (d
 
   const detailService = interpret(extendMockDetailMachine)
     .onTransition((state) => {
-      if (state.matches('loaded.purchased')) {
+      if (state.matches('loaded.purchaseSuccess')) {
         done();
       }
     })

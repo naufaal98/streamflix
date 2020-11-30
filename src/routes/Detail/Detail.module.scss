@@ -50,40 +50,48 @@
   margin-bottom: var(--spacing-5);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3);
 
   @media (min-width: 950px) {
     flex-direction: row;
-    gap: var(--spacing-3);
   }
 }
 
 .InfoFirstRow {
   display: flex;
-  gap: 20px;
   align-items: center;
+  @media (min-width: 950px) {
+    margin-right: 20px;
+  }
+}
+
+.Duration {
+  margin-left: 20px;
 }
 
 .InfoSecondRow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  margin-top: 20px;
+
+  @media (min-width: 950px) {
+    margin-top: 0;
+    padding-left: 20px;
+    border-left: 1px solid var(--color-text-light);
+  }
 }
 
 .Genre {
   position: relative;
-  padding: 0 10px;
-
-  &:first-child {
-    padding-left: 0;
-  }
 
   &:not(:last-child) {
+    padding-right: 20px;
     &:after {
       content: '';
       position: absolute;
       width: 3px;
       height: 3px;
-      right: 0;
+      right: 10px;
       top: 50%;
       background-color: var(--color-text-light);
     }
@@ -95,14 +103,31 @@
   align-items: center;
   gap: var(--spacing-2);
   margin-bottom: var(--spacing-5);
+
+  button {
+    width: 100%;
+  }
+
+  @media (min-width: 950px) {
+    button {
+      width: auto;
+    }
+  }
 }
 
 .MovieIsPurchased {
   font-weight: var(--fontWeight-bold);
   display: flex;
   align-items: center;
-  gap: 10px;
   color: green;
+
+  a {
+    color: green;
+  }
+
+  .MovieIsPurchasedFeedback {
+    margin-right: 15px;
+  }
 }
 
 .InsufficientBalance {

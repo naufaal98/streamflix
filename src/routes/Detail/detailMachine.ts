@@ -14,6 +14,7 @@ interface DetailStateSchema {
         idle: {};
         insufficientBalance: {};
         purchasing: {};
+        purchaseSuccess: {};
         purchased: {};
       };
     };
@@ -69,11 +70,12 @@ const detailMachine = Machine<DetailContext, DetailStateSchema, DetailEvent>(
               id: 'purchase-movie',
               src: 'purchaseMovie',
               onDone: {
-                target: 'purchased',
+                target: 'purchaseSuccess',
                 actions: ['updateUserPurchasedData', 'persist'],
               },
             },
           },
+          purchaseSuccess: {},
           purchased: {},
         },
         on: {

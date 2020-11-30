@@ -34,11 +34,8 @@ export default function Detail() {
         },
       },
       {
-        id: null,
-        movie: null,
+        ...detailMachine.context!,
         user: UserService.getLocalData(),
-        similarMovies: [],
-        recommendedMovies: [],
       },
     ),
   );
@@ -48,7 +45,8 @@ export default function Detail() {
     send({ type: 'FETCH', id: movieId });
   }, [id]);
 
-  const nestState = state; // To fix nested state.matches issue
+  const showPurchaseButton =
+    !state.matches('loaded.purchased') && !state.matches('loaded.purchaseSuccess');
 
   return (
     <div className={styles.Detail}>
@@ -78,12 +76,12 @@ export default function Detail() {
             <div className={styles.Description}>
               <h2 className={styles.MovieTitle}>
                 <span>{movie!.title}</span>
-                {state.matches('loaded.purchased')}
               </h2>
+
               <div className={styles.Info}>
                 <div className={styles.InfoFirstRow}>
                   <Rating score={movie!.rating} />
-                  <span className={styles.Duration}>{convertTime(movie!.duration)}</span>
+                  <div className={styles.Duration}>{convertTime(movie!.duration)}</div>
                 </div>
                 <div className={styles.InfoSecondRow}>
                   {movie!.genres.map((genre) => (
@@ -94,12 +92,12 @@ export default function Detail() {
                 </div>
               </div>
 
-              {!state.matches('loaded.purchased') && (
+              {showPurchaseButton && (
                 <div className={styles.BuyOption}>
                   <Button onClick={() => send('PURCHASE')}>
-                    {nestState.matches('loaded.purchasing') && 'Purchasing...'}
+                    {state.matches('loaded.purchasing') && 'Purchasing...'}
 
-                    {!nestState.matches('loaded.purchasing') && (
+                    {!state.matches('loaded.purchasing') && (
                       <>{formatToCurrency(movie!.price)}&nbsp;Purchase</>
                     )}
                   </Button>
@@ -109,9 +107,23 @@ export default function Detail() {
               <div className={styles.PurchaseStatus}>
                 {state.matches('loaded.purchased') && (
                   <p className={styles.MovieIsPurchased}>
-                    <span>This movie is in your library</span> <PurchasedIcon />
+                    <span className={styles.MovieIsPurchasedFeedback}>
+                      You have this movie in your&nbsp;
+                      <Link to="/library">library</Link>
+                    </span>
+                    <PurchasedIcon />
                   </p>
                 )}
+
+                {state.matches('loaded.purchaseSuccess') && (
+                  <p className={styles.MovieIsPurchased}>
+                    <span className={styles.MovieIsPurchasedFeedback}>
+                      Your purchase was successful!
+                    </span>
+                    <PurchasedIcon />
+                  </p>
+                )}
+
                 {state.matches('loaded.insufficientBalance') && (
                   <p className={styles.InsufficientBalance}>
                     Sorry, your balance is not enough to purchase this movie. &nbsp;
