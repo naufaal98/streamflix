@@ -17,6 +17,8 @@ export function movieAdapter(movie: any): Movie {
 export function movieListAdapter(data: any): MovieList {
   return {
     page: data.page,
+    total_pages: data.total_pages,
+    total_results: data.total_results,
     results: data.results.map((movie: any) => movieAdapter(movie)),
   };
 }
