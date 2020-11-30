@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMachine } from '@xstate/react';
 import { useHistory } from 'react-router-dom';
+import InfiniteScroll, { contextType } from 'react-infinite-scroller';
 
 import { Movie } from 'data/movie/movie.type';
 import { UserContext } from 'context/UserContext';
@@ -26,14 +27,6 @@ export default function Home() {
     state: persistedState,
   });
 
-  const infiniteScroll = () => {
-    const innerHeightPlusScrollTop = window.innerHeight + document.documentElement.scrollTop;
-    const { offsetHeight } = document.documentElement;
-    if (innerHeightPlusScrollTop === offsetHeight) {
-      send({ type: 'FETCH', page: state.context.page + 1 });
-    }
-  };
-
   service.onTransition((serviceState) => {
     try {
       sessionStorage.setItem(homeStateSession, JSON.stringify(serviceState));
@@ -44,31 +37,30 @@ export default function Home() {
   });
 
   React.useEffect(() => {
-    window.onscroll = () => infiniteScroll();
-    return () => {
-      window.onscroll = null;
-    };
-  });
-
-  React.useEffect(() => {
     history.replace({ pathname: `/?page=${state.context.page}` });
   }, [state.context.page]);
 
   return (
     <div className={styles.Home}>
-      <h2 className={styles.SectionTitle}>Currently Playing in Indoesia </h2>
-      <MoviesGrid>
-        {state.context.movies.map((movie: Movie) => (
-          <MovieCard
-            movie={movie}
-            isPurchased={isMoviePurchased({
-              purchased_movies: userData.purchased_movies,
-              id: movie.id,
-            })}
-            key={movie.id}
-          />
-        ))}
-      </MoviesGrid>
+      <h2 className={styles.SectionTitle}>Now Playing </h2>
+      <InfiniteScroll
+        pageStart={state.context.page}
+        hasMore
+        loadMore={() => send({ type: 'FETCH', page: state.context.page + 1 })}
+      >
+        <MoviesGrid>
+          {state.context.movies.map((movie: Movie) => (
+            <MovieCard
+              movie={movie}
+              isPurchased={isMoviePurchased({
+                purchased_movies: userData.purchased_movies,
+                id: movie.id,
+              })}
+              key={movie.id}
+            />
+          ))}
+        </MoviesGrid>
+      </InfiniteScroll>
 
       {state.value === 'failure' && (
         <div className={styles.Feedback}>
