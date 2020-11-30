@@ -73,7 +73,7 @@ const homeMachine = Machine<HomeContext, HomeStateSchema, HomeEvent>(
   },
   {
     services: {
-      invokeGetMovieList: (ctx) => MovieService.getNowPlaying({ page: ctx.page, region: 'ID' }),
+      invokeGetMovieList: (ctx) => MovieService.getNowPlaying({ page: ctx.page }),
     },
   },
 );
