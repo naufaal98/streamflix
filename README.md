@@ -2,7 +2,7 @@
 
 > Demo: [StreamFlix](https://streamflix.vercel.app/)
 
-A simple movie store app implement state machines (XState) with React.
+A simple movie store app implements a finite-state machine (XState) with React.
 
 ## Tech Stack (Essentially)
 
